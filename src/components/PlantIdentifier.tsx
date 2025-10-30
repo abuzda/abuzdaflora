@@ -77,6 +77,23 @@ export const PlantIdentifier = () => {
     });
   };
 
+  const isHeicFile = (file: File) => /heic|heif/i.test(file.type) || /\.(heic|heif)$/i.test(file.name || "");
+
+  const maybeConvertHeic = async (file: File): Promise<File> => {
+    if (!isHeicFile(file)) return file;
+    try {
+      const mod = await import("heic2any");
+      const heic2any: any = (mod as any).default || (mod as any);
+      const converted = (await heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 })) as Blob;
+      return new File([converted], (file.name || "photo").replace(/\.(heic|heif)$/i, ".jpg"), {
+        type: "image/jpeg",
+      });
+    } catch (e) {
+      console.error("HEIC convert error", e);
+      toast.error("Nie udało się przekonwertować HEIC. Wybierz JPEG/PNG.");
+      throw e;
+    }
+  };
   const handleImageUpload = async (file: File, diagnosisMode: boolean = false) => {
     if (!file) return;
 
@@ -96,8 +113,9 @@ export const PlantIdentifier = () => {
     setDiagnosisData(null);
 
     try {
-      // Convert image to JPEG base64
-      const base64String = await convertImageToJPEG(file);
+      // Konwersja HEIC → JPEG (jeśli potrzeba) + zmiana rozmiaru
+      const preparedFile = await maybeConvertHeic(file);
+      const base64String = await convertImageToJPEG(preparedFile);
       setSelectedImage(base64String);
 
       try {
