@@ -38,24 +38,16 @@ export const PlantIdentifier = () => {
   const convertImageToJPEG = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      const reader = new FileReader();
+      const objectUrl = URL.createObjectURL(file);
 
-      reader.onload = (e) => {
-        img.onload = () => {
-          // Create canvas and draw image
+      img.onload = () => {
+        try {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
+          if (!ctx) return reject(new Error("Failed to get canvas context"));
 
-          if (!ctx) {
-            reject(new Error("Failed to get canvas context"));
-            return;
-          }
-
-          // Calculate dimensions (max 1024px to reduce size)
           const maxSize = 1024;
-          let width = img.width;
-          let height = img.height;
-
+          let { width, height } = img;
           if (width > height && width > maxSize) {
             height = (height * maxSize) / width;
             width = maxSize;
@@ -66,36 +58,38 @@ export const PlantIdentifier = () => {
 
           canvas.width = width;
           canvas.height = height;
-
-          // Draw and convert to JPEG
           ctx.drawImage(img, 0, 0, width, height);
           const jpegBase64 = canvas.toDataURL("image/jpeg", 0.9);
+          URL.revokeObjectURL(objectUrl);
           resolve(jpegBase64);
-        };
-
-        img.onerror = () => reject(new Error("Failed to load image"));
-        img.src = e.target?.result as string;
+        } catch (e) {
+          URL.revokeObjectURL(objectUrl);
+          reject(e);
+        }
       };
 
-      reader.onerror = () => reject(new Error("Failed to read file"));
-      reader.readAsDataURL(file);
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error("Nie można wczytać obrazu (format może być nieobsługiwany)"));
+      };
+
+      img.src = objectUrl;
     });
   };
 
   const handleImageUpload = async (file: File, diagnosisMode: boolean = false) => {
     if (!file) return;
 
-    // Check file type
-    if (!file.type.startsWith("image/")) {
-      toast.error("Proszę wybrać plik graficzny");
+    // Luźniejsza walidacja: niektóre przeglądarki zwracają pusty MIME
+    const mime = file.type || "";
+    const name = file.name || "";
+    const looksLikeImage = mime.startsWith("image/") || /\.(jpg|jpeg|png|webp|heic|heif)$/i.test(name);
+    if (!looksLikeImage) {
+      toast.error("Proszę wybrać plik graficzny (JPEG/PNG/WEBP)");
       return;
     }
-    // Block unsupported HEIC/HEIF to avoid AI extraction errors
-    const isHeic = /heic|heif/i.test(file.type) || file.name?.toLowerCase().endsWith(".heic") || file.name?.toLowerCase().endsWith(".heif");
-    if (isHeic) {
-      toast.error("Format HEIC nieobsługiwany. Wybierz JPEG/PNG lub użyj aparatu.");
-      return;
-    }
+    // Dla HEIC spróbujemy wczytać obraz; jeśli się nie uda, pokażemy komunikat w catch
+
 
     setIsIdentifying(true);
     setPlantData(null);
