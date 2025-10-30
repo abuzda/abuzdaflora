@@ -150,6 +150,7 @@ export const PlantIdentifier = () => {
       <div className="w-full max-w-4xl mx-auto space-y-8">
         {/* Global hidden inputs used by both tabs */}
         <input
+          id="camera-input"
           type="file"
           accept="image/*"
           capture="environment"
@@ -158,8 +159,9 @@ export const PlantIdentifier = () => {
           className="hidden"
         />
         <input
+          id="gallery-input"
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept="image/*"
           onChange={handleFileSelect}
           ref={fileInputRef}
           className="hidden"
@@ -221,30 +223,40 @@ export const PlantIdentifier = () => {
             </CardContent>
           </Card>
 
-          {selectedImage && !isIdentifying && plantData && (
+          {selectedImage && (
             <Card className="border-2 border-primary/20 shadow-lg overflow-hidden">
               <div className="bg-gradient-to-br from-primary/10 to-secondary/20 p-6">
                 <img
                   src={selectedImage}
-                  alt="Selected plant"
+                  alt="Podgląd rośliny"
                   className="w-full max-h-64 object-cover rounded-lg shadow-md"
                 />
               </div>
-              <CardContent className="p-8 space-y-6">
-                <div className="text-center space-y-2">
-                  <h2 className="text-3xl font-bold text-primary">{plantData.plantName}</h2>
-                  <p className="text-muted-foreground italic">{plantData.scientificName}</p>
-                </div>
-
-                <div className="grid gap-6">
-                  <InfoSection title="💡 Oświetlenie" content={plantData.light} />
-                  <InfoSection title="💧 Podlewanie" content={plantData.watering} />
-                  <InfoSection title="💨 Wilgotność" content={plantData.humidity} />
-                  <InfoSection title="🌱 Podłoże" content={plantData.soil} />
-                  <InfoSection title="🌿 Nawożenie" content={plantData.fertilizing} />
-                  <InfoSection title="✨ Wskazówki" content={plantData.tips} />
-                  <InfoSection title="⚠️ Częste Problemy" content={plantData.commonIssues} />
-                </div>
+              <CardContent className="p-8 space-y-4 text-center">
+                {isIdentifying ? (
+                  <div className="flex items-center justify-center gap-3 text-muted-foreground">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Rozpoznaję roślinę...</span>
+                  </div>
+                ) : (
+                  plantData && (
+                    <>
+                      <div className="space-y-2">
+                        <h2 className="text-3xl font-bold text-primary">{plantData.plantName}</h2>
+                        <p className="text-muted-foreground italic">{plantData.scientificName}</p>
+                      </div>
+                      <div className="grid gap-6 text-left">
+                        <InfoSection title="💡 Oświetlenie" content={plantData.light} />
+                        <InfoSection title="💧 Podlewanie" content={plantData.watering} />
+                        <InfoSection title="💨 Wilgotność" content={plantData.humidity} />
+                        <InfoSection title="🌱 Podłoże" content={plantData.soil} />
+                        <InfoSection title="🌿 Nawożenie" content={plantData.fertilizing} />
+                        <InfoSection title="✨ Wskazówki" content={plantData.tips} />
+                        <InfoSection title="⚠️ Częste Problemy" content={plantData.commonIssues} />
+                      </div>
+                    </>
+                  )
+                )}
               </CardContent>
             </Card>
           )}
@@ -301,26 +313,36 @@ export const PlantIdentifier = () => {
             </CardContent>
           </Card>
 
-          {selectedImage && !isIdentifying && diagnosisData && (
+          {selectedImage && (
             <Card className="border-2 border-accent/20 shadow-lg overflow-hidden">
               <div className="bg-gradient-to-br from-accent/10 to-destructive/10 p-6">
                 <img
                   src={selectedImage}
-                  alt="Plant diagnosis"
+                  alt="Podgląd diagnozy rośliny"
                   className="w-full max-h-64 object-cover rounded-lg shadow-md"
                 />
               </div>
               <CardContent className="p-8 space-y-6">
-                <div className="text-center space-y-2">
-                  <h2 className="text-3xl font-bold text-accent">{diagnosisData.diagnosis}</h2>
-                </div>
-
-                <div className="grid gap-6">
-                  <InfoSection title="🔍 Objawy" content={diagnosisData.symptoms} />
-                  <InfoSection title="❓ Przyczyny" content={diagnosisData.causes} />
-                  <InfoSection title="💊 Leczenie" content={diagnosisData.treatment} />
-                  <InfoSection title="🛡️ Zapobieganie" content={diagnosisData.prevention} />
-                </div>
+                {isIdentifying ? (
+                  <div className="flex items-center justify-center gap-3 text-muted-foreground">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Analizuję problem rośliny...</span>
+                  </div>
+                ) : (
+                  diagnosisData && (
+                    <>
+                      <div className="text-center space-y-2">
+                        <h2 className="text-3xl font-bold text-accent">{diagnosisData.diagnosis}</h2>
+                      </div>
+                      <div className="grid gap-6">
+                        <InfoSection title="🔍 Objawy" content={diagnosisData.symptoms} />
+                        <InfoSection title="❓ Przyczyny" content={diagnosisData.causes} />
+                        <InfoSection title="💊 Leczenie" content={diagnosisData.treatment} />
+                        <InfoSection title="🛡️ Zapobieganie" content={diagnosisData.prevention} />
+                      </div>
+                    </>
+                  )
+                )}
               </CardContent>
             </Card>
           )}
