@@ -15,7 +15,7 @@ const Index = () => {
         <div className="relative container mx-auto px-4 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
-              🌿 PlantDoctor
+              🌿 AbuzdaFlora
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground">
               Twój inteligentny asystent pielęgnacji roślin doniczkowych
