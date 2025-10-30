@@ -90,6 +90,12 @@ export const PlantIdentifier = () => {
       toast.error("Proszę wybrać plik graficzny");
       return;
     }
+    // Block unsupported HEIC/HEIF to avoid AI extraction errors
+    const isHeic = /heic|heif/i.test(file.type) || file.name?.toLowerCase().endsWith(".heic") || file.name?.toLowerCase().endsWith(".heif");
+    if (isHeic) {
+      toast.error("Format HEIC nieobsługiwany. Wybierz JPEG/PNG lub użyj aparatu.");
+      return;
+    }
 
     setIsIdentifying(true);
     setPlantData(null);
@@ -141,12 +147,28 @@ export const PlantIdentifier = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-8">
-      <Tabs value={activeMode} onValueChange={(v) => setActiveMode(v as any)} className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="identify">Rozpoznaj Roślinę</TabsTrigger>
-          <TabsTrigger value="diagnose">Diagnoza Problemu</TabsTrigger>
-        </TabsList>
+      <div className="w-full max-w-4xl mx-auto space-y-8">
+        {/* Global hidden inputs used by both tabs */}
+        <input
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={handleFileSelect}
+          ref={cameraInputRef}
+          className="hidden"
+        />
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={handleFileSelect}
+          ref={fileInputRef}
+          className="hidden"
+        />
+        <Tabs value={activeMode} onValueChange={(v) => setActiveMode(v as any)} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="identify">Rozpoznaj Roślinę</TabsTrigger>
+            <TabsTrigger value="diagnose">Diagnoza Problemu</TabsTrigger>
+          </TabsList>
 
         <TabsContent value="identify" className="space-y-6 mt-8">
           <Card className="border-2 border-primary/20 shadow-lg">
@@ -162,14 +184,6 @@ export const PlantIdentifier = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  onChange={handleFileSelect}
-                  ref={cameraInputRef}
-                  className="hidden"
-                />
                 <Button
                   variant="default"
                   size="lg"
@@ -187,13 +201,6 @@ export const PlantIdentifier = () => {
                   )}
                 </Button>
 
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileSelect}
-                  ref={fileInputRef}
-                  className="hidden"
-                />
                 <Button
                   variant="secondary"
                   size="lg"
