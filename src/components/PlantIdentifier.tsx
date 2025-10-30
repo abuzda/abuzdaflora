@@ -35,49 +35,97 @@ export const PlantIdentifier = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
+  const convertImageToJPEG = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        img.onload = () => {
+          // Create canvas and draw image
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          if (!ctx) {
+            reject(new Error("Failed to get canvas context"));
+            return;
+          }
+
+          // Calculate dimensions (max 1024px to reduce size)
+          const maxSize = 1024;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height && width > maxSize) {
+            height = (height * maxSize) / width;
+            width = maxSize;
+          } else if (height > maxSize) {
+            width = (width * maxSize) / height;
+            height = maxSize;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          // Draw and convert to JPEG
+          ctx.drawImage(img, 0, 0, width, height);
+          const jpegBase64 = canvas.toDataURL("image/jpeg", 0.9);
+          resolve(jpegBase64);
+        };
+
+        img.onerror = () => reject(new Error("Failed to load image"));
+        img.src = e.target?.result as string;
+      };
+
+      reader.onerror = () => reject(new Error("Failed to read file"));
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleImageUpload = async (file: File, diagnosisMode: boolean = false) => {
     if (!file) return;
+
+    // Check file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Proszę wybrać plik graficzny");
+      return;
+    }
 
     setIsIdentifying(true);
     setPlantData(null);
     setDiagnosisData(null);
 
     try {
-      // Convert to base64
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64String = reader.result as string;
-        setSelectedImage(base64String);
+      // Convert image to JPEG base64
+      const base64String = await convertImageToJPEG(file);
+      setSelectedImage(base64String);
 
-        try {
-          const { data, error } = await supabase.functions.invoke("identify-plant", {
-            body: { imageBase64: base64String, diagnosisMode },
-          });
+      try {
+        const { data, error } = await supabase.functions.invoke("identify-plant", {
+          body: { imageBase64: base64String, diagnosisMode },
+        });
 
-          if (error) throw error;
+        if (error) throw error;
 
-          if (!data.success) {
-            throw new Error(data.error || "Nie udało się rozpoznać rośliny");
-          }
-
-          if (diagnosisMode) {
-            setDiagnosisData(data.data);
-            toast.success("Diagnoza została wykonana!");
-          } else {
-            setPlantData(data.data);
-            toast.success("Roślina rozpoznana!");
-          }
-        } catch (err) {
-          console.error("Error identifying plant:", err);
-          toast.error(
-            err instanceof Error ? err.message : "Wystąpił błąd podczas rozpoznawania"
-          );
-        } finally {
-          setIsIdentifying(false);
+        if (!data.success) {
+          throw new Error(data.error || "Nie udało się rozpoznać rośliny");
         }
-      };
 
-      reader.readAsDataURL(file);
+        if (diagnosisMode) {
+          setDiagnosisData(data.data);
+          toast.success("Diagnoza została wykonana!");
+        } else {
+          setPlantData(data.data);
+          toast.success("Roślina rozpoznana!");
+        }
+      } catch (err) {
+        console.error("Error identifying plant:", err);
+        toast.error(
+          err instanceof Error ? err.message : "Wystąpił błąd podczas rozpoznawania"
+        );
+      } finally {
+        setIsIdentifying(false);
+      }
     } catch (error) {
       console.error("Error processing image:", error);
       toast.error("Błąd podczas przetwarzania zdjęcia");
