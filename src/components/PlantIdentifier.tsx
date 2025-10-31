@@ -97,13 +97,34 @@ export const PlantIdentifier = () => {
     }
   };
 
-  const saveToHistory = async (imageUrl: string, data: PlantData | DiagnosisData, type: "identify" | "diagnose") => {
+  const saveToHistory = async (base64Image: string, data: PlantData | DiagnosisData, type: "identify" | "diagnose") => {
     if (!user) return;
 
     try {
+      // Upload image to storage
+      const fileName = `${user.id}/${Date.now()}.jpg`;
+      const base64Data = base64Image.split(',')[1];
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'image/jpeg' });
+
+      const { error: uploadError } = await supabase.storage
+        .from('plant-images')
+        .upload(fileName, blob);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('plant-images')
+        .getPublicUrl(fileName);
+
       const record: any = {
         user_id: user.id,
-        image_url: imageUrl,
+        image_url: publicUrl,
         identification_type: type,
       };
 
