@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface PlantData {
   plantName: string;
@@ -27,6 +28,7 @@ interface DiagnosisData {
 }
 
 export const PlantIdentifier = () => {
+  const { user } = useAuth();
   const [isIdentifying, setIsIdentifying] = useState(false);
   const [plantData, setPlantData] = useState<PlantData | null>(null);
   const [diagnosisData, setDiagnosisData] = useState<DiagnosisData | null>(null);
@@ -94,6 +96,44 @@ export const PlantIdentifier = () => {
       throw e;
     }
   };
+
+  const saveToHistory = async (imageUrl: string, data: PlantData | DiagnosisData, type: "identify" | "diagnose") => {
+    if (!user) return;
+
+    try {
+      const record: any = {
+        user_id: user.id,
+        image_url: imageUrl,
+        identification_type: type,
+      };
+
+      if (type === "identify") {
+        const plantInfo = data as PlantData;
+        record.plant_name = plantInfo.plantName;
+        record.scientific_name = plantInfo.scientificName;
+        record.light = plantInfo.light;
+        record.watering = plantInfo.watering;
+        record.humidity = plantInfo.humidity;
+        record.soil = plantInfo.soil;
+        record.fertilizing = plantInfo.fertilizing;
+        record.tips = plantInfo.tips;
+        record.common_issues = plantInfo.commonIssues;
+      } else {
+        const diagInfo = data as DiagnosisData;
+        record.diagnosis = diagInfo.diagnosis;
+        record.symptoms = diagInfo.symptoms;
+        record.causes = diagInfo.causes;
+        record.treatment = diagInfo.treatment;
+        record.prevention = diagInfo.prevention;
+      }
+
+      const { error } = await supabase.from("plant_identifications").insert(record);
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error saving to history:", error);
+    }
+  };
+
   const handleImageUpload = async (file: File, diagnosisMode: boolean = false) => {
     if (!file) return;
 
@@ -131,9 +171,11 @@ export const PlantIdentifier = () => {
 
         if (diagnosisMode) {
           setDiagnosisData(data.data);
+          await saveToHistory(base64String, data.data, "diagnose");
           toast.success("Diagnoza została wykonana!");
         } else {
           setPlantData(data.data);
+          await saveToHistory(base64String, data.data, "identify");
           toast.success("Roślina rozpoznana!");
         }
       } catch (err) {

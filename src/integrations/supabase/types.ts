@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      plant_identifications: {
+        Row: {
+          causes: string | null
+          common_issues: string | null
+          created_at: string
+          diagnosis: string | null
+          fertilizing: string | null
+          humidity: string | null
+          id: string
+          identification_type: string
+          image_url: string
+          light: string | null
+          plant_name: string | null
+          prevention: string | null
+          scientific_name: string | null
+          soil: string | null
+          symptoms: string | null
+          tips: string | null
+          treatment: string | null
+          updated_at: string
+          user_id: string
+          watering: string | null
+        }
+        Insert: {
+          causes?: string | null
+          common_issues?: string | null
+          created_at?: string
+          diagnosis?: string | null
+          fertilizing?: string | null
+          humidity?: string | null
+          id?: string
+          identification_type: string
+          image_url: string
+          light?: string | null
+          plant_name?: string | null
+          prevention?: string | null
+          scientific_name?: string | null
+          soil?: string | null
+          symptoms?: string | null
+          tips?: string | null
+          treatment?: string | null
+          updated_at?: string
+          user_id: string
+          watering?: string | null
+        }
+        Update: {
+          causes?: string | null
+          common_issues?: string | null
+          created_at?: string
+          diagnosis?: string | null
+          fertilizing?: string | null
+          humidity?: string | null
+          id?: string
+          identification_type?: string
+          image_url?: string
+          light?: string | null
+          plant_name?: string | null
+          prevention?: string | null
+          scientific_name?: string | null
+          soil?: string | null
+          symptoms?: string | null
+          tips?: string | null
+          treatment?: string | null
+          updated_at?: string
+          user_id?: string
+          watering?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
