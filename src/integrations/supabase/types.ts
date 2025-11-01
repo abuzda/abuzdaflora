@@ -14,6 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      plant_collection: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          last_watered_at: string | null
+          next_watering_at: string | null
+          notes: string | null
+          plant_name: string
+          scientific_name: string | null
+          updated_at: string
+          user_id: string
+          watering_frequency_days: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          last_watered_at?: string | null
+          next_watering_at?: string | null
+          notes?: string | null
+          plant_name: string
+          scientific_name?: string | null
+          updated_at?: string
+          user_id: string
+          watering_frequency_days?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          last_watered_at?: string | null
+          next_watering_at?: string | null
+          notes?: string | null
+          plant_name?: string
+          scientific_name?: string | null
+          updated_at?: string
+          user_id?: string
+          watering_frequency_days?: number | null
+        }
+        Relationships: []
+      }
       plant_identifications: {
         Row: {
           causes: string | null
@@ -106,6 +172,41 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      watering_schedule: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          plant_id: string
+          user_id: string
+          watered_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          plant_id: string
+          user_id: string
+          watered_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          plant_id?: string
+          user_id?: string
+          watered_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watering_schedule_plant_id_fkey"
+            columns: ["plant_id"]
+            isOneToOne: false
+            referencedRelation: "plant_collection"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
