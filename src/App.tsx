@@ -12,6 +12,7 @@ import History from "./pages/History";
 import Collection from "./pages/Collection";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
+import Download from "./pages/Download";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
               <Route path="/history" element={<AuthGuard><History /></AuthGuard>} />
               <Route path="/collection" element={<AuthGuard><Collection /></AuthGuard>} />
               <Route path="/search" element={<AuthGuard><Search /></AuthGuard>} />
+              <Route path="/download" element={<AuthGuard><Download /></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
