@@ -58,6 +58,14 @@ export function Navbar() {
             >
               Wyszukiwarka
             </Link>
+            <Link
+              to="/download"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/download') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Pobierz iOS
+            </Link>
           </div>
 
           <div className="flex items-center space-x-2">

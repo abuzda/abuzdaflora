@@ -27,11 +27,11 @@ const App = () => (
           <AuthProvider>
             <Routes>
               <Route path="/auth" element={<Auth />} />
+              <Route path="/download" element={<Download />} />
               <Route path="/" element={<AuthGuard><Index /></AuthGuard>} />
               <Route path="/history" element={<AuthGuard><History /></AuthGuard>} />
               <Route path="/collection" element={<AuthGuard><Collection /></AuthGuard>} />
               <Route path="/search" element={<AuthGuard><Search /></AuthGuard>} />
-              <Route path="/download" element={<AuthGuard><Download /></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
