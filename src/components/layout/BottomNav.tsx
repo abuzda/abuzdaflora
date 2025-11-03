@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, History, Leaf, Search, User } from 'lucide-react';
+import { Home, History, Leaf, Search, User, Heart } from 'lucide-react';
 
 export function BottomNav() {
   const location = useLocation();
@@ -10,13 +10,14 @@ export function BottomNav() {
     { path: '/', icon: Home, label: 'Główna' },
     { path: '/history', icon: History, label: 'Historia' },
     { path: '/collection', icon: Leaf, label: 'Kolekcja' },
+    { path: '/favorites', icon: Heart, label: 'Ulubione' },
     { path: '/search', icon: Search, label: 'Szukaj' },
     { path: '/profile', icon: User, label: 'Profil' }
   ];
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-50">
-      <div className="grid grid-cols-5 h-16">
+      <div className="grid grid-cols-6 h-16">
         {navItems.map(({ path, icon: Icon, label }) => (
           <Link
             key={path}

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Camera, Upload, Loader2, Leaf } from "lucide-react";
+import { Camera, Upload, Loader2, Leaf, Heart, BookmarkPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
@@ -152,6 +152,52 @@ export const PlantIdentifier = () => {
       if (error) throw error;
     } catch (error) {
       console.error("Error saving to history:", error);
+    }
+  };
+
+  const handleAddToCollection = async () => {
+    if (!user || !plantData || !selectedImage) {
+      toast.error("Brak danych rośliny");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from('plant_collection').insert({
+        user_id: user.id,
+        plant_name: plantData.plantName,
+        scientific_name: plantData.scientificName,
+        image_url: selectedImage,
+        watering_frequency_days: 7,
+      });
+
+      if (error) throw error;
+      toast.success("Roślina dodana do kolekcji!");
+    } catch (error) {
+      console.error("Error adding to collection:", error);
+      toast.error("Nie udało się dodać do kolekcji");
+    }
+  };
+
+  const handleAddToFavorites = async () => {
+    if (!user || !plantData || !selectedImage) {
+      toast.error("Brak danych rośliny");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from('favorites').insert([{
+        user_id: user.id,
+        plant_name: plantData.plantName,
+        scientific_name: plantData.scientificName,
+        image_url: selectedImage,
+        identification_data: plantData as any,
+      }]);
+
+      if (error) throw error;
+      toast.success("Dodano do ulubionych!");
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+      toast.error("Nie udało się dodać do ulubionych");
     }
   };
 
@@ -319,6 +365,16 @@ export const PlantIdentifier = () => {
                       <div className="space-y-2">
                         <h2 className="text-3xl font-bold text-primary">{plantData.plantName}</h2>
                         <p className="text-muted-foreground italic">{plantData.scientificName}</p>
+                      </div>
+                      <div className="flex gap-3 justify-center mb-6">
+                        <Button onClick={handleAddToCollection} variant="default">
+                          <BookmarkPlus className="w-4 h-4 mr-2" />
+                          Dodaj do Kolekcji
+                        </Button>
+                        <Button onClick={handleAddToFavorites} variant="secondary">
+                          <Heart className="w-4 h-4 mr-2" />
+                          Dodaj do Ulubionych
+                        </Button>
                       </div>
                       <div className="grid gap-6 text-left">
                         <InfoSection title="💡 Oświetlenie" content={plantData.light} />
