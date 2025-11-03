@@ -14,6 +14,7 @@ import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import Download from "./pages/Download";
 import Favorites from "./pages/Favorites";
+import NaturalCare from "./pages/NaturalCare";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/collection" element={<AuthGuard><Collection /></AuthGuard>} />
               <Route path="/search" element={<AuthGuard><Search /></AuthGuard>} />
               <Route path="/favorites" element={<AuthGuard><Favorites /></AuthGuard>} />
+              <Route path="/natural-care" element={<AuthGuard><NaturalCare /></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

@@ -51,6 +51,22 @@ export function Navbar() {
               Moja Kolekcja
             </Link>
             <Link
+              to="/favorites"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/favorites') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Ulubione
+            </Link>
+            <Link
+              to="/natural-care"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/natural-care') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Naturalna Pielęgnacja
+            </Link>
+            <Link
               to="/search"
               className={`text-sm font-medium transition-colors hover:text-primary ${
                 isActive('/search') ? 'text-primary' : 'text-muted-foreground'
