@@ -67,6 +67,14 @@ export function Navbar() {
               Naturalna Pielęgnacja
             </Link>
             <Link
+              to="/beginner-plants"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/beginner-plants') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Dla Początkujących
+            </Link>
+            <Link
               to="/search"
               className={`text-sm font-medium transition-colors hover:text-primary ${
                 isActive('/search') ? 'text-primary' : 'text-muted-foreground'

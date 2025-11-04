@@ -75,6 +75,46 @@ export default function NaturalCare() {
       usage: 'Zmiksuj 5 ząbków czosnku z wodą, odstaw na dobę. Przesącz i opryskuj rośliny.',
       benefits: ['Odpędza szkodniki', 'Działa przeciwgrzybicznie', 'Wzmacnia rośliny'],
       plants: ['Wszystkie rośliny']
+    },
+    {
+      icon: Coffee,
+      name: 'Herbata',
+      description: 'Źródło tanin i składników odżywczych',
+      usage: 'Wysuszone fusy herbaty wymieszaj z ziemią lub przygotuj słaby napar do podlewania.',
+      benefits: ['Zakwasza glebę', 'Dostarcza składniki odżywcze', 'Poprawia strukturę gleby'],
+      plants: ['Paprocie', 'Róże', 'Rośliny kwasolubne']
+    },
+    {
+      icon: Leaf,
+      name: 'Skrzyp polny',
+      description: 'Wzmacnia rośliny, bogaty w krzem',
+      usage: 'Przygotuj wywar: gotuj 30 min, odstaw na dobę. Rozcieńcz 1:5 i opryskuj rośliny.',
+      benefits: ['Wzmacnia tkanki roślinne', 'Zapobiega chorobom grzybowym', 'Bogaty w krzem'],
+      plants: ['Wszystkie rośliny ogrodowe']
+    },
+    {
+      icon: Droplets,
+      name: 'Gnojówka z kompostu',
+      description: 'Płynny nawóz pełen składników odżywczych',
+      usage: 'Kompost zalej wodą (1:3), odstaw na tydzień mieszając codziennie. Rozcieńcz 1:10.',
+      benefits: ['Kompleksowy nawóz', 'Pobudza wzrost', 'Poprawia żyzność gleby'],
+      plants: ['Warzywa', 'Kwiaty', 'Rośliny owocowe']
+    },
+    {
+      icon: Apple,
+      name: 'Drożdże',
+      description: 'Stymulator wzrostu korzeni i pędów',
+      usage: '10g drożdży + 1 łyżka cukru na 10l letniej wody. Odstaw 2h, rozcieńcz 1:5.',
+      benefits: ['Przyspiesza wzrost', 'Wzmacnia korzenie', 'Zwiększa odporność'],
+      plants: ['Rozsady', 'Rośliny młode', 'Warzywa']
+    },
+    {
+      icon: Leaf,
+      name: 'Woda z akwarium',
+      description: 'Naturalne źródło składników odżywczych',
+      usage: 'Wodę z akwarium po wymianie używaj bezpośrednio do podlewania.',
+      benefits: ['Zawiera azot i fosfor', 'Naturalne bakterie', 'Zero odpadów'],
+      plants: ['Wszystkie rośliny doniczkowe']
     }
   ];
 

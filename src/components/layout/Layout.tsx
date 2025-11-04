@@ -15,7 +15,7 @@ export function Layout({ children }: LayoutProps) {
       </main>
       <BottomNav />
       <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-background mb-16 md:mb-0">
-        Stworzone przez Abuzde
+        Stworzone z 💚 dla miłośników roślin przez Abuzda
       </footer>
     </div>
   );
