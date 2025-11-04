@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Bell } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -81,6 +81,14 @@ export function Navbar() {
               }`}
             >
               Wyszukiwarka
+            </Link>
+            <Link
+              to="/fertilization-calendar"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/fertilization-calendar') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Kalendarz Nawożenia
             </Link>
             <Link
               to="/download"

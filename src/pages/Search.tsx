@@ -3,15 +3,18 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Search as SearchIcon, Loader2 } from 'lucide-react';
+import { Search as SearchIcon, Loader2, Plus } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Search() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
+  const [addingToCollection, setAddingToCollection] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const handleSearch = async () => {
     if (!query.trim()) {
@@ -46,6 +49,45 @@ export default function Search() {
     }
   };
 
+  const handleAddToCollection = async () => {
+    if (!result || !query.trim()) {
+      toast({
+        title: 'Błąd',
+        description: 'Najpierw wyszukaj roślinę',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setAddingToCollection(true);
+
+    try {
+      const { error } = await supabase
+        .from('plant_collection')
+        .insert({
+          user_id: user?.id,
+          plant_name: query,
+          notes: result,
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Sukces',
+        description: 'Roślina dodana do kolekcji',
+      });
+    } catch (error) {
+      console.error('Error adding to collection:', error);
+      toast({
+        title: 'Błąd',
+        description: 'Nie udało się dodać rośliny do kolekcji',
+        variant: 'destructive',
+      });
+    } finally {
+      setAddingToCollection(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -71,8 +113,24 @@ export default function Search() {
         {result && (
           <Card>
             <CardHeader>
-              <CardTitle>Wyniki wyszukiwania</CardTitle>
-              <CardDescription>Informacje o roślinie: {query}</CardDescription>
+              <div className="flex items-start justify-between">
+                <div>
+                  <CardTitle>Wyniki wyszukiwania</CardTitle>
+                  <CardDescription>Informacje o roślinie: {query}</CardDescription>
+                </div>
+                <Button
+                  onClick={handleAddToCollection}
+                  disabled={addingToCollection}
+                  size="sm"
+                >
+                  {addingToCollection ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Plus className="h-4 w-4 mr-2" />
+                  )}
+                  Dodaj do kolekcji
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="whitespace-pre-wrap">{result}</div>

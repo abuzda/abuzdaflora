@@ -16,6 +16,7 @@ import Download from "./pages/Download";
 import Favorites from "./pages/Favorites";
 import NaturalCare from "./pages/NaturalCare";
 import BeginnerPlants from "./pages/BeginnerPlants";
+import FertilizationCalendar from "./pages/FertilizationCalendar";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/favorites" element={<AuthGuard><Favorites /></AuthGuard>} />
               <Route path="/natural-care" element={<AuthGuard><NaturalCare /></AuthGuard>} />
               <Route path="/beginner-plants" element={<AuthGuard><BeginnerPlants /></AuthGuard>} />
+              <Route path="/fertilization-calendar" element={<AuthGuard><FertilizationCalendar /></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
