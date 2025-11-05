@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Layout } from '@/components/layout/Layout';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { WateringCalendar } from '@/components/WateringCalendar';
 import { PlantChat } from '@/components/PlantChat';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -23,22 +24,30 @@ interface Plant {
   last_watered_at: string | null;
   next_watering_at: string | null;
   notes: string | null;
+  fertilizer_recommendation: string | null;
 }
 
 export default function Collection() {
   const [plants, setPlants] = useState<Plant[]>([]);
+  const [cachedPlants, setCachedPlants] = useLocalStorage<Plant[]>('plant_collection_cache', []);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
     plant_name: '',
     scientific_name: '',
     watering_frequency_days: 7,
     notes: '',
+    fertilizer_recommendation: '',
   });
   const { user } = useAuth();
   const { toast } = useToast();
 
   useEffect(() => {
     if (user) {
+      // Load from cache first for offline support
+      if (cachedPlants.length > 0) {
+        setPlants(cachedPlants);
+      }
+      // Then fetch fresh data
       fetchPlants();
     }
   }, [user]);
@@ -57,7 +66,9 @@ export default function Collection() {
       return;
     }
 
-    setPlants(data || []);
+    const plantsData = data || [];
+    setPlants(plantsData);
+    setCachedPlants(plantsData); // Cache for offline use
   };
 
   const handleAddPlant = async (e: React.FormEvent) => {
@@ -70,6 +81,7 @@ export default function Collection() {
       scientific_name: formData.scientific_name || null,
       watering_frequency_days: formData.watering_frequency_days,
       notes: formData.notes || null,
+      fertilizer_recommendation: formData.fertilizer_recommendation || null,
     });
 
     if (error) {
@@ -91,6 +103,7 @@ export default function Collection() {
       scientific_name: '',
       watering_frequency_days: 7,
       notes: '',
+      fertilizer_recommendation: '',
     });
     setIsDialogOpen(false);
     fetchPlants();
@@ -188,6 +201,15 @@ export default function Collection() {
                       />
                     </div>
                     <div>
+                      <Label htmlFor="fertilizer_recommendation">Naturalny nawóz (rekomendacja)</Label>
+                      <Textarea
+                        id="fertilizer_recommendation"
+                        value={formData.fertilizer_recommendation}
+                        onChange={(e) => setFormData({ ...formData, fertilizer_recommendation: e.target.value })}
+                        placeholder="np. Fusy z kawy co 2 tygodnie + gnojówka z pokrzywy co miesiąc"
+                      />
+                    </div>
+                    <div>
                       <Label htmlFor="notes">Notatki</Label>
                       <Textarea
                         id="notes"
@@ -240,6 +262,14 @@ export default function Collection() {
                         <Droplets className="h-4 w-4 text-primary" />
                         <span>Co {plant.watering_frequency_days} dni</span>
                       </div>
+                      {plant.fertilizer_recommendation && (
+                        <div className="bg-primary/5 p-2 rounded-md">
+                          <p className="text-xs font-semibold text-primary mb-1">🌿 Nawóz naturalny:</p>
+                          <p className="text-xs text-muted-foreground">
+                            {plant.fertilizer_recommendation}
+                          </p>
+                        </div>
+                      )}
                       {plant.notes && (
                         <p className="text-sm text-muted-foreground line-clamp-3">
                           {plant.notes}
