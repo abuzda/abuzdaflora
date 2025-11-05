@@ -1,6 +1,6 @@
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Leaf, Droplets, Bug, Sprout, Coffee, Egg, Fish, Apple, Milk } from 'lucide-react';
+import { Leaf, Droplets, Bug, Sprout, Coffee, Egg, Fish, Apple, Milk, Flame as Fire } from 'lucide-react';
 
 export default function NaturalCare() {
   const fertilizers = [
@@ -115,6 +115,86 @@ export default function NaturalCare() {
       usage: 'Wodę z akwarium po wymianie używaj bezpośrednio do podlewania.',
       benefits: ['Zawiera azot i fosfor', 'Naturalne bakterie', 'Zero odpadów'],
       plants: ['Wszystkie rośliny doniczkowe']
+    },
+    {
+      icon: Apple,
+      name: 'Skórki od owoców cytrusowych',
+      description: 'Bogate w witaminy, odstraszają szkodniki',
+      usage: 'Rozdrobnione skórki zakop w glebie lub dodaj do kompostu. Możesz też zrobić napar.',
+      benefits: ['Odstraszają mszyce i mrówki', 'Kwasują glebę', 'Dodają aromatu'],
+      plants: ['Rośliny kwasolubne', 'Cytrusy', 'Azalie']
+    },
+    {
+      icon: Fire,
+      name: 'Popiół drzewny',
+      description: 'Źródło potasu i mikroelementów',
+      usage: 'Cienką warstwę posyp wokół roślin (max 2 razy rocznie). Nie używaj na rośliny kwasolubne.',
+      benefits: ['Zwiększa pH gleby', 'Bogaty w potas', 'Wspiera kwitnienie'],
+      plants: ['Pomidory', 'Róże', 'Rośliny owocowe']
+    },
+    {
+      icon: Milk,
+      name: 'Serwatka',
+      description: 'Produkt uboczny produkcji sera, bogaty w probiotyki',
+      usage: 'Rozcieńcz serwatkę z wodą 1:10. Podlewaj lub spryskuj rośliny co 2 tygodnie.',
+      benefits: ['Wzmacnia rośliny', 'Zapobiega chorobom grzybiczym', 'Dostarcza białka'],
+      plants: ['Wszystkie warzywa', 'Rośliny owocowe']
+    },
+    {
+      icon: Fish,
+      name: 'Wodorosty morskie',
+      description: 'Pełne mikroelementów i hormonów wzrostu',
+      usage: 'Napar z suszonych wodorostów lub gnojówka (maceruj 2 tyg, rozcieńcz 1:20).',
+      benefits: ['Stymulują wzrost', 'Zwiększają odporność', 'Poprawiają strukturę gleby'],
+      plants: ['Wszystkie rośliny']
+    },
+    {
+      icon: Coffee,
+      name: 'Osad z kawy espresso',
+      description: 'Koncentrat składników odżywczych z kawy',
+      usage: 'Stosuj umiarkowanie - bardzo mocny. Najlepiej w kompoście lub rozcieńczony.',
+      benefits: ['Bardzo bogaty w azot', 'Kwasuje glebę intensywnie', 'Poprawia strukturę'],
+      plants: ['Azalie', 'Hortensje', 'Borówki']
+    },
+    {
+      icon: Leaf,
+      name: 'Skoszona trawa',
+      description: 'Szybko rozkładający się mulcz organiczny',
+      usage: 'Rozłóż cienką warstwę (2-3 cm) wokół roślin. Przed użyciem lekko przesusz.',
+      benefits: ['Dodaje azotu', 'Chroni przed wysychaniem', 'Tłumi chwasty'],
+      plants: ['Wszystkie rośliny ogrodowe']
+    },
+    {
+      icon: Bug,
+      name: 'Cebula',
+      description: 'Naturalny środek ochrony i nawóz',
+      usage: 'Łupiny cebuli zalej wodą, gotuj 15 min. Rozcieńcz 1:5 i spryskuj rośliny.',
+      benefits: ['Odstraszają szkodniki', 'Działają przeciwgrzybicznie', 'Wzmacniają odporność'],
+      plants: ['Wszystkie rośliny']
+    },
+    {
+      icon: Sprout,
+      name: 'Nasiona lucerny',
+      description: 'Bogate w azot i mikroelementy',
+      usage: 'Zakop nasiona wokół rośliny lub zrób napar (zalej wodą na dobę).',
+      benefits: ['Wysoka zawartość azotu', 'Poprawia strukturę gleby', 'Naturalny nawóz wolno działający'],
+      plants: ['Rośliny zielone', 'Warzywa liściaste']
+    },
+    {
+      icon: Egg,
+      name: 'Woda po gotowaniu jaj',
+      description: 'Woda bogata w wapń ze skorupek',
+      usage: 'Schłodzoną wodę (bez soli!) używaj do podlewania raz w tygodniu.',
+      benefits: ['Dostarcza wapń', 'Zero odpadów', 'Łatwe w użyciu'],
+      plants: ['Pomidory', 'Papryka', 'Wszystkie warzywa']
+    },
+    {
+      icon: Leaf,
+      name: 'Liście orzecha włoskiego',
+      description: 'Naturalne źródło tanin i składników odżywczych',
+      usage: 'Wysuszone liście dodaj do kompostu lub zrób napar (maceruj 2 tyg).',
+      benefits: ['Odpędza szkodniki', 'Bogaty w taniny', 'Naturalny środek ochrony'],
+      plants: ['Róże', 'Pomidory', 'Wszystkie rośliny ogrodowe']
     }
   ];
 
