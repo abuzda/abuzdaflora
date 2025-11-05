@@ -64,7 +64,7 @@ export default function FertilizationCalendar() {
 
   const fetchRecords = async () => {
     const { data, error } = await supabase
-      .from('fertilization_schedule')
+      .from('fertilization_schedule' as any)
       .select('*')
       .order('scheduled_date');
 
@@ -73,7 +73,7 @@ export default function FertilizationCalendar() {
       return;
     }
 
-    setRecords(data || []);
+    setRecords(data as any || []);
   };
 
   const handleAddRecord = async () => {
@@ -89,7 +89,7 @@ export default function FertilizationCalendar() {
     const plant = plants.find(p => p.id === selectedPlantId);
     
     const { error } = await supabase
-      .from('fertilization_schedule')
+      .from('fertilization_schedule' as any)
       .insert({
         user_id: user?.id,
         plant_id: selectedPlantId,
@@ -123,8 +123,8 @@ export default function FertilizationCalendar() {
 
   const handleToggleComplete = async (id: string, completed: boolean) => {
     const { error } = await supabase
-      .from('fertilization_schedule')
-      .update({ completed: !completed })
+      .from('fertilization_schedule' as any)
+      .update({ completed: !completed } as any)
       .eq('id', id);
 
     if (error) {
@@ -141,7 +141,7 @@ export default function FertilizationCalendar() {
 
   const handleDelete = async (id: string) => {
     const { error } = await supabase
-      .from('fertilization_schedule')
+      .from('fertilization_schedule' as any)
       .delete()
       .eq('id', id);
 

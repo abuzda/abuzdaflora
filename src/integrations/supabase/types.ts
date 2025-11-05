@@ -68,6 +68,45 @@ export type Database = {
         }
         Relationships: []
       }
+      fertilization_schedule: {
+        Row: {
+          completed: boolean
+          created_at: string
+          fertilizer_type: string
+          id: string
+          notes: string | null
+          plant_id: string
+          plant_name: string
+          scheduled_date: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          fertilizer_type: string
+          id?: string
+          notes?: string | null
+          plant_id: string
+          plant_name: string
+          scheduled_date: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          fertilizer_type?: string
+          id?: string
+          notes?: string | null
+          plant_id?: string
+          plant_name?: string
+          scheduled_date?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       plant_collection: {
         Row: {
           created_at: string
