@@ -20,6 +20,7 @@ import FertilizationCalendar from "./pages/FertilizationCalendar";
 import NotFound from "./pages/NotFound";
 import SeasonalAdvice from "./pages/SeasonalAdvice";
 import Encyclopedia from "./pages/Encyclopedia";
+import Install from "./pages/Install";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/fertilization-calendar" element={<AuthGuard><FertilizationCalendar /></AuthGuard>} />
               <Route path="/seasonal-advice" element={<AuthGuard><SeasonalAdvice /></AuthGuard>} />
               <Route path="/encyclopedia" element={<AuthGuard><Encyclopedia /></AuthGuard>} />
+              <Route path="/install" element={<AuthGuard><Install /></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
