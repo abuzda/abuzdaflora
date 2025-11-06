@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 interface HistoryItem {
   id: string;
@@ -36,6 +37,7 @@ export default function History() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState<HistoryItem | null>(null);
+  const [cachedHistory, setCachedHistory] = useLocalStorage<HistoryItem[]>('history', []);
 
   const fetchHistory = async () => {
     if (!user) return;
@@ -48,7 +50,9 @@ export default function History() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setHistory(data || []);
+      const historyData = data || [];
+      setHistory(historyData);
+      setCachedHistory(historyData);
     } catch (error) {
       console.error('Error fetching history:', error);
       toast.error('Nie udało się pobrać historii');
@@ -74,6 +78,13 @@ export default function History() {
   };
 
   useEffect(() => {
+    // Load from cache first
+    if (cachedHistory.length > 0) {
+      setHistory(cachedHistory);
+      setLoading(false);
+    }
+    
+    // Then fetch fresh data
     fetchHistory();
   }, [user]);
 

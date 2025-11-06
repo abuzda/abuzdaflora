@@ -18,6 +18,8 @@ import NaturalCare from "./pages/NaturalCare";
 import BeginnerPlants from "./pages/BeginnerPlants";
 import FertilizationCalendar from "./pages/FertilizationCalendar";
 import NotFound from "./pages/NotFound";
+import SeasonalAdvice from "./pages/SeasonalAdvice";
+import Encyclopedia from "./pages/Encyclopedia";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,8 @@ const App = () => (
               <Route path="/natural-care" element={<AuthGuard><NaturalCare /></AuthGuard>} />
               <Route path="/beginner-plants" element={<AuthGuard><BeginnerPlants /></AuthGuard>} />
               <Route path="/fertilization-calendar" element={<AuthGuard><FertilizationCalendar /></AuthGuard>} />
+              <Route path="/seasonal-advice" element={<AuthGuard><SeasonalAdvice /></AuthGuard>} />
+              <Route path="/encyclopedia" element={<AuthGuard><Encyclopedia /></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

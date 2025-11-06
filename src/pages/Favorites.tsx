@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Heart, Trash2 } from 'lucide-react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 interface Favorite {
   id: string;
@@ -18,10 +19,17 @@ interface Favorite {
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
+  const [cachedFavorites, setCachedFavorites] = useLocalStorage<Favorite[]>('favorites', []);
   const { user } = useAuth();
   const { toast } = useToast();
 
   useEffect(() => {
+    // Load from cache first
+    if (cachedFavorites.length > 0) {
+      setFavorites(cachedFavorites);
+    }
+    
+    // Then fetch fresh data
     if (user) {
       fetchFavorites();
     }
@@ -41,7 +49,9 @@ export default function Favorites() {
       return;
     }
 
-    setFavorites(data || []);
+    const favoritesData = data || [];
+    setFavorites(favoritesData);
+    setCachedFavorites(favoritesData);
   };
 
   const handleDeleteFavorite = async (id: string) => {

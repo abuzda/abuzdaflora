@@ -14,6 +14,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Bell, Plus, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 interface FertilizationRecord {
   id: string;
@@ -33,6 +34,7 @@ interface PlantInCollection {
 export default function FertilizationCalendar() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [records, setRecords] = useState<FertilizationRecord[]>([]);
+  const [cachedRecords, setCachedRecords] = useLocalStorage<FertilizationRecord[]>('fertilization_records', []);
   const [plants, setPlants] = useState<PlantInCollection[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedPlantId, setSelectedPlantId] = useState('');
@@ -42,6 +44,12 @@ export default function FertilizationCalendar() {
   const { user } = useAuth();
 
   useEffect(() => {
+    // Load from cache first
+    if (cachedRecords.length > 0) {
+      setRecords(cachedRecords);
+    }
+    
+    // Then fetch fresh data
     if (user) {
       fetchPlants();
       fetchRecords();
@@ -73,7 +81,9 @@ export default function FertilizationCalendar() {
       return;
     }
 
-    setRecords(data as any || []);
+    const recordsData = data as any || [];
+    setRecords(recordsData);
+    setCachedRecords(recordsData);
   };
 
   const handleAddRecord = async () => {

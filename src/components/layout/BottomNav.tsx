@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, History, Leaf, Search, User, Heart, Sprout, FlowerIcon, Download, Bell } from 'lucide-react';
+import { Home, History, Leaf, Search, User, Heart, Sprout, FlowerIcon, Download, Bell, Calendar, BookOpen } from 'lucide-react';
 
 export function BottomNav() {
   const location = useLocation();
@@ -14,7 +14,9 @@ export function BottomNav() {
     { path: '/search', icon: Search, label: 'Szukaj' },
     { path: '/natural-care', icon: Sprout, label: 'Pielęgnacja' },
     { path: '/beginner-plants', icon: FlowerIcon, label: 'Dla początkujących' },
-    { path: '/fertilization-calendar', icon: Bell, label: 'Kalendarz' },
+    { path: '/fertilization-calendar', icon: Bell, label: 'Nawożenie' },
+    { path: '/seasonal-advice', icon: Calendar, label: 'Sezonowo' },
+    { path: '/encyclopedia', icon: BookOpen, label: 'Encyklopedia' },
     { path: '/download', icon: Download, label: 'iOS' },
     { path: '/profile', icon: User, label: 'Profil' }
   ];
