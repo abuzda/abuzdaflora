@@ -1,5 +1,6 @@
 import { PlantIdentifier } from "@/components/PlantIdentifier";
 import { Layout } from "@/components/layout/Layout";
+import { UpcomingTasks } from "@/components/UpcomingTasks";
 import heroImage from "@/assets/hero-plants.jpg";
 
 const Index = () => {
@@ -44,7 +45,10 @@ const Index = () => {
 
         {/* Main Content */}
         <section className="container mx-auto px-4 py-8 md:py-12">
-          <PlantIdentifier />
+          <div className="max-w-6xl mx-auto space-y-8">
+            <UpcomingTasks />
+            <PlantIdentifier />
+          </div>
         </section>
 
         {/* Footer */}
