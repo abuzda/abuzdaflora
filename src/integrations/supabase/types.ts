@@ -110,6 +110,7 @@ export type Database = {
       plant_collection: {
         Row: {
           created_at: string
+          description: string | null
           fertilizer_recommendation: string | null
           id: string
           image_url: string | null
@@ -124,6 +125,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          description?: string | null
           fertilizer_recommendation?: string | null
           id?: string
           image_url?: string | null
@@ -138,6 +140,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          description?: string | null
           fertilizer_recommendation?: string | null
           id?: string
           image_url?: string | null

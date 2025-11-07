@@ -25,6 +25,7 @@ interface Plant {
   next_watering_at: string | null;
   notes: string | null;
   fertilizer_recommendation: string | null;
+  description: string | null;
 }
 
 export default function Collection() {
@@ -37,6 +38,7 @@ export default function Collection() {
     watering_frequency_days: 7,
     notes: '',
     fertilizer_recommendation: '',
+    description: '',
   });
   const { user } = useAuth();
   const { toast } = useToast();
@@ -82,6 +84,7 @@ export default function Collection() {
       watering_frequency_days: formData.watering_frequency_days,
       notes: formData.notes || null,
       fertilizer_recommendation: formData.fertilizer_recommendation || null,
+      description: formData.description || null,
     });
 
     if (error) {
@@ -104,6 +107,7 @@ export default function Collection() {
       watering_frequency_days: 7,
       notes: '',
       fertilizer_recommendation: '',
+      description: '',
     });
     setIsDialogOpen(false);
     fetchPlants();
@@ -191,6 +195,15 @@ export default function Collection() {
                       />
                     </div>
                     <div>
+                      <Label htmlFor="description">Krótki opis rośliny</Label>
+                      <Textarea
+                        id="description"
+                        value={formData.description}
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                        placeholder="Dodaj krótki opis rośliny, jej wygląd, cechy szczególne..."
+                      />
+                    </div>
+                    <div>
                       <Label htmlFor="watering_frequency">Częstotliwość podlewania (dni)</Label>
                       <Input
                         id="watering_frequency"
@@ -258,6 +271,11 @@ export default function Collection() {
                       )}
                     </CardHeader>
                     <CardContent className="space-y-2">
+                      {plant.description && (
+                        <div className="mb-3 p-3 bg-muted/50 rounded-md">
+                          <p className="text-sm text-foreground">{plant.description}</p>
+                        </div>
+                      )}
                       <div className="flex items-center gap-2 text-sm">
                         <Droplets className="h-4 w-4 text-primary" />
                         <span>Co {plant.watering_frequency_days} dni</span>
@@ -271,9 +289,12 @@ export default function Collection() {
                         </div>
                       )}
                       {plant.notes && (
-                        <p className="text-sm text-muted-foreground line-clamp-3">
-                          {plant.notes}
-                        </p>
+                        <div className="pt-2 border-t">
+                          <p className="text-xs font-semibold text-muted-foreground mb-1">Notatki:</p>
+                          <p className="text-sm text-muted-foreground line-clamp-3">
+                            {plant.notes}
+                          </p>
+                        </div>
                       )}
                     </CardContent>
                   </Card>
