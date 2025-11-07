@@ -12,6 +12,13 @@ import ficusImg from '@/assets/plants/ficus.jpg';
 import spathiphyllumImg from '@/assets/plants/spathiphyllum.jpg';
 import aloeImg from '@/assets/plants/aloe.jpg';
 import orchidImg from '@/assets/plants/orchid.jpg';
+import fernImg from '@/assets/plants/fern.jpg';
+import cactusImg from '@/assets/plants/cactus.jpg';
+import begoniaImg from '@/assets/plants/begonia.jpg';
+import basilImg from '@/assets/plants/basil.jpg';
+import mintImg from '@/assets/plants/mint.jpg';
+import rosemaryImg from '@/assets/plants/rosemary.jpg';
+import lavenderImg from '@/assets/plants/lavender.jpg';
 
 export default function Encyclopedia() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -135,10 +142,13 @@ export default function Encyclopedia() {
       commonName: 'Paproć nerkowa',
       difficulty: 'Średnia',
       light: 'Półcień',
-      water: 'Obfite',
-      humidity: 'Bardzo wysoka',
-      description: 'Dekoracyjna roślina o delikatnych, pierzastych liściach.',
-      tips: 'Potrzebuje wysokiej wilgotności - idealna do łazienki.'
+      water: 'Obfite (co 3-5 dni)',
+      humidity: 'Bardzo wysoka (70-90%)',
+      temperature: '15-24°C',
+      image: fernImg,
+      description: 'Dekoracyjna roślina o delikatnych, pierzastych liściach. Doskonale oczyszcza powietrze i dodaje świeżości wnętrzom.',
+      care: 'Utrzymuj ziemię stale wilgotną. Regularnie zraszaj liście - uwielbia wysoką wilgotność. Idealna do łazienki z naturalnym światłem.',
+      tips: 'Potrzebuje wysokiej wilgotności - idealna do łazienki. Może rosnąć na hydroponice.'
     },
     {
       name: 'Kaktus',
@@ -146,10 +156,13 @@ export default function Encyclopedia() {
       commonName: 'Kaktus',
       difficulty: 'Łatwa',
       light: 'Bardzo jasne, słoneczne',
-      water: 'Bardzo rzadkie',
-      humidity: 'Bardzo niska',
-      description: 'Sukulentowa roślina pustynna. Wiele odmian i kształtów.',
-      tips: 'Zimą prawie nie podlewaj.'
+      water: 'Bardzo rzadkie (co 3-4 tygodnie)',
+      humidity: 'Bardzo niska (20-40%)',
+      temperature: '15-30°C',
+      image: cactusImg,
+      description: 'Sukulentowa roślina pustynna. Wiele odmian i kształtów. Magazynuje wodę w mięsistych łodygach, co czyni je niemal niezniszczalnymi.',
+      care: 'Podlewaj bardzo rzadko - dopiero gdy gleba całkowicie wyschnie. Wymaga doskonałego drenażu i pełnego słońca. Zimą prawie wcale nie podlewaj.',
+      tips: 'Zimą prawie nie podlewaj - to okres spoczynku. Zbyt częste podlewanie to częsta przyczyna gnicia.'
     },
     {
       name: 'Begonia',
@@ -157,21 +170,27 @@ export default function Encyclopedia() {
       commonName: 'Begonia',
       difficulty: 'Średnia',
       light: 'Jasne, rozproszone',
-      water: 'Umiarkowane',
-      humidity: 'Średnia',
-      description: 'Roślina o pięknych, ozdobnych liściach lub kwiatach.',
-      tips: 'Unikaj mocnego słońca i przelania.'
+      water: 'Umiarkowane (co 5-7 dni)',
+      humidity: 'Średnia (50-60%)',
+      temperature: '16-24°C',
+      image: begoniaImg,
+      description: 'Roślina o pięknych, ozdobnych liściach lub kwiatach. Setki odmian o różnorodnych wzorach i kolorach liści.',
+      care: 'Podlewaj regularnie, ale pozwól ziemi lekko wyschnąć między podlewaniami. Unikaj mocnego słońca - może spalić liście. Nie lubi zalewania.',
+      tips: 'Unikaj mocnego słońca i przelania. Liście mogą być bardzo dekoracyjne nawet bez kwiatów.'
     },
     {
-      name: 'Bazyli',
+      name: 'Bazylia',
       scientificName: 'Ocimum basilicum',
       commonName: 'Bazylia',
       difficulty: 'Łatwa',
-      light: 'Bardzo jasne',
-      water: 'Obfite',
-      humidity: 'Średnia',
-      description: 'Aromatyczne zioło kulinarne. Świeże liście do potraw.',
-      tips: 'Regularnie przycinaj, aby był bardziej krzaczasty.'
+      light: 'Bardzo jasne (min. 6h słońca)',
+      water: 'Obfite (codziennie)',
+      humidity: 'Średnia (40-60%)',
+      temperature: '18-27°C',
+      image: basilImg,
+      description: 'Aromatyczne zioło kulinarne. Świeże liście do potraw włoskich, sałatek i sosów pesto. Najlepsze prosto z doniczki.',
+      care: 'Podlewaj codziennie - lubi wilgotną glebę. Wymaga dużo słońca. Regularnie przycinaj końcówki, aby roślina była bardziej krzaczasta.',
+      tips: 'Regularnie przycinaj, aby był bardziej krzaczasty. Usuwaj kwiatostany - przedłuży to produkcję liści.'
     },
     {
       name: 'Mięta',
@@ -179,32 +198,41 @@ export default function Encyclopedia() {
       commonName: 'Mięta',
       difficulty: 'Bardzo łatwa',
       light: 'Jasne do półcienia',
-      water: 'Obfite',
-      humidity: 'Średnia',
-      description: 'Ekspansywne zioło o orzeźwiającym aromacie.',
-      tips: 'Rośnie bardzo szybko - trzymaj w osobnej doniczce.'
+      water: 'Obfite (co 2-3 dni)',
+      humidity: 'Średnia (40-60%)',
+      temperature: '15-25°C',
+      image: mintImg,
+      description: 'Ekspansywne zioło o orzeźwiającym aromacie. Świetne do herbat, koktajli i deserów. Rośnie bardzo szybko.',
+      care: 'Podlewaj często - lubi wilgotną glebę. Może rosnąć w półcieniu. Bardzo ekspansywna - trzymaj w osobnej doniczce lub kontroluj rozrost.',
+      tips: 'Rośnie bardzo szybko - trzymaj w osobnej doniczce. Możesz hodować nawet w wodzie.'
     },
     {
       name: 'Rozmaryn',
       scientificName: 'Rosmarinus officinalis',
       commonName: 'Rozmaryn lekarski',
       difficulty: 'Średnia',
-      light: 'Bardzo jasne',
-      water: 'Rzadkie',
-      humidity: 'Niska',
-      description: 'Aromatyczne zioło śródziemnomorskie. Idealne do dań mięsnych.',
-      tips: 'Nie lubi mokrej gleby - dobry drenaż jest kluczowy.'
+      light: 'Bardzo jasne (min. 6h słońca)',
+      water: 'Rzadkie (co 7-10 dni)',
+      humidity: 'Niska (30-50%)',
+      temperature: '12-24°C',
+      image: rosemaryImg,
+      description: 'Aromatyczne zioło śródziemnomorskie. Idealne do dań mięsnych, pieczonych warzyw i ziemniaków. Intensywny aromat.',
+      care: 'Podlewaj oszczędnie - nie lubi mokrej gleby. Wymaga pełnego słońca i dobrego drenażu. Może rosnąć na zewnątrz latem.',
+      tips: 'Nie lubi mokrej gleby - dobry drenaż jest kluczowy. Może przezimować na dworze w łagodnym klimacie.'
     },
     {
       name: 'Lawenda',
       scientificName: 'Lavandula',
       commonName: 'Lawenda',
       difficulty: 'Średnia',
-      light: 'Bardzo jasne, słoneczne',
-      water: 'Rzadkie',
-      humidity: 'Niska',
-      description: 'Pachnąca roślina o fioletowych kwiatach. Uspokaja i odpędza insekty.',
-      tips: 'Potrzebuje dużo słońca i dobrze przepuszczalnej gleby.'
+      light: 'Bardzo jasne, słoneczne (min. 6h)',
+      water: 'Rzadkie (co 7-10 dni)',
+      humidity: 'Niska (30-50%)',
+      temperature: '15-25°C',
+      image: lavenderImg,
+      description: 'Pachnąca roślina o fioletowych kwiatach. Uspokaja, poprawia sen i odpędza insekty. Kwiaty nadają się do suszenia.',
+      care: 'Podlewaj oszczędnie - pochodzi z suchych regionów. Wymaga pełnego słońca i bardzo dobrego drenażu. Przycinaj po kwitnieniu.',
+      tips: 'Potrzebuje dużo słońca i dobrze przepuszczalnej gleby. Suszone kwiaty zachowują aromat przez miesiące.'
     }
   ];
 
