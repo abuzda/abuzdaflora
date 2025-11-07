@@ -22,6 +22,7 @@ import SeasonalAdvice from "./pages/SeasonalAdvice";
 import Encyclopedia from "./pages/Encyclopedia";
 import Install from "./pages/Install";
 import GrowthJournal from "./pages/GrowthJournal";
+import CareCalendar from "./pages/CareCalendar";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/natural-care" element={<AuthGuard><NaturalCare /></AuthGuard>} />
               <Route path="/beginner-plants" element={<AuthGuard><BeginnerPlants /></AuthGuard>} />
               <Route path="/fertilization-calendar" element={<AuthGuard><FertilizationCalendar /></AuthGuard>} />
+              <Route path="/care-calendar" element={<AuthGuard><CareCalendar /></AuthGuard>} />
               <Route path="/seasonal-advice" element={<AuthGuard><SeasonalAdvice /></AuthGuard>} />
               <Route path="/encyclopedia" element={<AuthGuard><Encyclopedia /></AuthGuard>} />
               <Route path="/growth-journal" element={<AuthGuard><GrowthJournal /></AuthGuard>} />

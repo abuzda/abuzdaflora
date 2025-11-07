@@ -2,14 +2,23 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
-import { LogOut, User, Bell } from 'lucide-react';
+import { LogOut, User, Book, Calendar, Sprout, ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu';
 
 export function Navbar() {
   const { user, signOut } = useAuth();
@@ -34,70 +43,91 @@ export function Navbar() {
             >
               Rozpoznawanie
             </Link>
-            <Link
-              to="/history"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/history') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Historia
-            </Link>
-            <Link
-              to="/collection"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/collection') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Moja Kolekcja
-            </Link>
-            <Link
-              to="/favorites"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/favorites') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Ulubione
-            </Link>
-            <Link
-              to="/natural-care"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/natural-care') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Naturalna Pielęgnacja
-            </Link>
-            <Link
-              to="/beginner-plants"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/beginner-plants') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Dla Początkujących
-            </Link>
-            <Link
-              to="/search"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/search') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Wyszukiwarka
-            </Link>
-            <Link
-              to="/fertilization-calendar"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/fertilization-calendar') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Kalendarz Nawożenia
-            </Link>
-            <Link
-              to="/encyclopedia"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/encyclopedia') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Encyklopedia
-            </Link>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-sm font-medium h-auto p-0 hover:text-primary">
+                  Moja Kolekcja <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <Link to="/collection" className="cursor-pointer">
+                    <Sprout className="mr-2 h-4 w-4" />
+                    Kolekcja Roślin
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/favorites" className="cursor-pointer">
+                    <Sprout className="mr-2 h-4 w-4" />
+                    Ulubione
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/history" className="cursor-pointer">
+                    <Sprout className="mr-2 h-4 w-4" />
+                    Historia
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-sm font-medium h-auto p-0 hover:text-primary">
+                  Kalendarze <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <Link to="/care-calendar" className="cursor-pointer">
+                    <Calendar className="mr-2 h-4 w-4" />
+                    Kalendarz Pielęgnacyjny
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/fertilization-calendar" className="cursor-pointer text-muted-foreground">
+                    Kalendarz Nawożenia
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-sm font-medium h-auto p-0 hover:text-primary">
+                  Wiedza <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <Link to="/encyclopedia" className="cursor-pointer">
+                    <Book className="mr-2 h-4 w-4" />
+                    Encyklopedia
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/natural-care" className="cursor-pointer">
+                    <Book className="mr-2 h-4 w-4" />
+                    Naturalna Pielęgnacja
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/beginner-plants" className="cursor-pointer">
+                    <Book className="mr-2 h-4 w-4" />
+                    Dla Początkujących
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/search" className="cursor-pointer">
+                    <Book className="mr-2 h-4 w-4" />
+                    Wyszukiwarka
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Link
               to="/growth-journal"
               className={`text-sm font-medium transition-colors hover:text-primary ${
@@ -105,14 +135,6 @@ export function Navbar() {
               }`}
             >
               Dziennik Wzrostu
-            </Link>
-            <Link
-              to="/download"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive('/download') ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Pobierz iOS
             </Link>
           </div>
 
