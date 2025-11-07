@@ -91,6 +91,22 @@ export function Navbar() {
               Kalendarz Nawożenia
             </Link>
             <Link
+              to="/encyclopedia"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/encyclopedia') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Encyklopedia
+            </Link>
+            <Link
+              to="/growth-journal"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/growth-journal') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Dziennik Wzrostu
+            </Link>
+            <Link
               to="/download"
               className={`text-sm font-medium transition-colors hover:text-primary ${
                 isActive('/download') ? 'text-primary' : 'text-muted-foreground'

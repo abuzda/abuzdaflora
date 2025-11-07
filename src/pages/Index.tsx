@@ -1,6 +1,7 @@
 import { PlantIdentifier } from "@/components/PlantIdentifier";
 import { Layout } from "@/components/layout/Layout";
 import { UpcomingTasks } from "@/components/UpcomingTasks";
+import { WeatherWidget } from "@/components/WeatherWidget";
 import heroImage from "@/assets/hero-plants.jpg";
 
 const Index = () => {
@@ -46,7 +47,10 @@ const Index = () => {
         {/* Main Content */}
         <section className="container mx-auto px-4 py-8 md:py-12">
           <div className="max-w-6xl mx-auto space-y-8">
-            <UpcomingTasks />
+            <div className="grid md:grid-cols-2 gap-6">
+              <UpcomingTasks />
+              <WeatherWidget />
+            </div>
             <PlantIdentifier />
           </div>
         </section>

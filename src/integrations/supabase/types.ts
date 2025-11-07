@@ -107,6 +107,53 @@ export type Database = {
         }
         Relationships: []
       }
+      growth_journal: {
+        Row: {
+          created_at: string
+          entry_date: string
+          height_cm: number | null
+          id: string
+          image_url: string | null
+          leaf_count: number | null
+          notes: string | null
+          plant_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry_date?: string
+          height_cm?: number | null
+          id?: string
+          image_url?: string | null
+          leaf_count?: number | null
+          notes?: string | null
+          plant_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry_date?: string
+          height_cm?: number | null
+          id?: string
+          image_url?: string | null
+          leaf_count?: number | null
+          notes?: string | null
+          plant_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "growth_journal_plant_id_fkey"
+            columns: ["plant_id"]
+            isOneToOne: false
+            referencedRelation: "plant_collection"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       plant_collection: {
         Row: {
           created_at: string
@@ -245,6 +292,39 @@ export type Database = {
           display_name?: string | null
           id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      user_weather_preferences: {
+        Row: {
+          city_name: string
+          country_code: string | null
+          created_at: string
+          id: string
+          latitude: number | null
+          longitude: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          city_name: string
+          country_code?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          city_name?: string
+          country_code?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
