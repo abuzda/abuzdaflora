@@ -20,10 +20,18 @@ export function WeatherWidget() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [savedCity, setSavedCity] = useState('');
+  const [apiKey, setApiKey] = useState('');
+  const [showApiKeyInput, setShowApiKeyInput] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
 
   useEffect(() => {
+    const savedKey = localStorage.getItem('openweather_api_key');
+    if (savedKey) {
+      setApiKey(savedKey);
+    } else {
+      setShowApiKeyInput(true);
+    }
     loadSavedLocation();
   }, [user]);
 
@@ -46,10 +54,20 @@ export function WeatherWidget() {
   const fetchWeather = async (cityName: string) => {
     if (!cityName.trim()) return;
 
+    if (!apiKey) {
+      toast({
+        title: 'Brak klucza API',
+        description: 'Podaj klucz API OpenWeatherMap',
+        variant: 'destructive',
+      });
+      setShowApiKeyInput(true);
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=demo&units=metric&lang=pl`
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=pl`
       );
       
       if (!response.ok) {
@@ -97,6 +115,16 @@ export function WeatherWidget() {
     fetchWeather(city);
   };
 
+  const handleSaveApiKey = () => {
+    if (!apiKey.trim()) return;
+    localStorage.setItem('openweather_api_key', apiKey);
+    setShowApiKeyInput(false);
+    toast({
+      title: 'Sukces',
+      description: 'Klucz API został zapisany',
+    });
+  };
+
   const getWeatherAdvice = () => {
     if (!weather) return null;
 
@@ -126,17 +154,49 @@ export function WeatherWidget() {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
+        {showApiKeyInput && (
+          <div className="space-y-2 p-3 bg-muted/50 rounded-lg">
+            <p className="text-sm text-muted-foreground">
+              Potrzebujesz klucza API OpenWeatherMap. Zarejestruj się za darmo na{' '}
+              <a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                openweathermap.org
+              </a>
+            </p>
+            <div className="flex gap-2">
+              <Input
+                type="password"
+                placeholder="Klucz API OpenWeatherMap"
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+              />
+              <Button onClick={handleSaveApiKey}>Zapisz</Button>
+            </div>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="flex gap-2">
           <Input
             type="text"
             placeholder="Wpisz miasto..."
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            disabled={!apiKey}
           />
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading || !apiKey}>
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MapPin className="h-4 w-4" />}
           </Button>
         </form>
+        
+        {apiKey && !showApiKeyInput && (
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setShowApiKeyInput(true)}
+            className="text-xs w-full"
+          >
+            Zmień klucz API
+          </Button>
+        )}
 
         {weather && (
           <div className="space-y-4">

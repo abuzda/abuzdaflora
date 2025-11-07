@@ -44,6 +44,8 @@ export default function GrowthJournal() {
     leaf_count: '',
     notes: '',
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -103,38 +105,71 @@ export default function GrowthJournal() {
     e.preventDefault();
     if (!user) return;
 
-    const { error } = await supabase.from('growth_journal').insert({
-      user_id: user.id,
-      plant_id: formData.plant_id,
-      entry_date: formData.entry_date,
-      height_cm: formData.height_cm ? parseFloat(formData.height_cm) : null,
-      leaf_count: formData.leaf_count ? parseInt(formData.leaf_count) : null,
-      notes: formData.notes || null,
-    });
+    setUploading(true);
+    let imageUrl = null;
 
-    if (error) {
+    try {
+      // Upload image if selected
+      if (imageFile) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('plant-images')
+          .upload(fileName, imageFile);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('plant-images')
+          .getPublicUrl(fileName);
+
+        imageUrl = publicUrl;
+      }
+
+      const { error } = await supabase.from('growth_journal').insert({
+        user_id: user.id,
+        plant_id: formData.plant_id,
+        entry_date: formData.entry_date,
+        height_cm: formData.height_cm ? parseFloat(formData.height_cm) : null,
+        leaf_count: formData.leaf_count ? parseInt(formData.leaf_count) : null,
+        notes: formData.notes || null,
+        image_url: imageUrl,
+      });
+
+      if (error) {
+        toast({
+          title: 'Błąd',
+          description: 'Nie udało się dodać wpisu do dziennika',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      toast({
+        title: 'Sukces',
+        description: 'Wpis został dodany do dziennika wzrostu',
+      });
+
+      setFormData({
+        plant_id: '',
+        entry_date: new Date().toISOString().split('T')[0],
+        height_cm: '',
+        leaf_count: '',
+        notes: '',
+      });
+      setImageFile(null);
+      setIsDialogOpen(false);
+      fetchEntries();
+    } catch (error) {
       toast({
         title: 'Błąd',
-        description: 'Nie udało się dodać wpisu do dziennika',
+        description: 'Wystąpił błąd podczas zapisywania',
         variant: 'destructive',
       });
-      return;
+    } finally {
+      setUploading(false);
     }
-
-    toast({
-      title: 'Sukces',
-      description: 'Wpis został dodany do dziennika wzrostu',
-    });
-
-    setFormData({
-      plant_id: '',
-      entry_date: new Date().toISOString().split('T')[0],
-      height_cm: '',
-      leaf_count: '',
-      notes: '',
-    });
-    setIsDialogOpen(false);
-    fetchEntries();
   };
 
   const handleDelete = async (id: string) => {
@@ -277,8 +312,17 @@ export default function GrowthJournal() {
                         }
                       />
                     </div>
-                    <Button type="submit" className="w-full">
-                      Dodaj wpis
+                    <div>
+                      <Label htmlFor="image">Zdjęcie (opcjonalne)</Label>
+                      <Input
+                        id="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                      />
+                    </div>
+                    <Button type="submit" className="w-full" disabled={uploading}>
+                      {uploading ? 'Zapisywanie...' : 'Dodaj wpis'}
                     </Button>
                   </form>
                 </DialogContent>
@@ -349,6 +393,13 @@ export default function GrowthJournal() {
                                 </div>
                               )}
                             </div>
+                            {entry.image_url && (
+                              <img 
+                                src={entry.image_url} 
+                                alt="Zdjęcie rośliny" 
+                                className="w-full h-48 object-cover rounded-md"
+                              />
+                            )}
                             {entry.notes && (
                               <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-md">
                                 {entry.notes}
