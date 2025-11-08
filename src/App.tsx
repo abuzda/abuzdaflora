@@ -23,6 +23,8 @@ import Encyclopedia from "./pages/Encyclopedia";
 import Install from "./pages/Install";
 import GrowthJournal from "./pages/GrowthJournal";
 import CareCalendar from "./pages/CareCalendar";
+import LightCalculator from "./pages/LightCalculator";
+import Hydroponics from "./pages/Hydroponics";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,8 @@ const App = () => (
               <Route path="/growth-journal" element={<AuthGuard><GrowthJournal /></AuthGuard>} />
               <Route path="/install" element={<AuthGuard><Install /></AuthGuard>} />
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
+              <Route path="/light-calculator" element={<AuthGuard><LightCalculator /></AuthGuard>} />
+              <Route path="/hydroponics" element={<AuthGuard><Hydroponics /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
