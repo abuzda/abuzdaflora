@@ -1,7 +1,14 @@
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Droplets, Leaf, Beaker, BookOpen, CheckCircle2, AlertTriangle } from "lucide-react";
+import { Droplets, Leaf, Beaker, BookOpen, CheckCircle2, AlertTriangle, Image as ImageIcon } from "lucide-react";
+import step1 from "@/assets/hydro-diy/step1-materials.jpg";
+import step2 from "@/assets/hydro-diy/step2-drilling.jpg";
+import step3 from "@/assets/hydro-diy/step3-airpump.jpg";
+import step4 from "@/assets/hydro-diy/step4-netpots.jpg";
+import step5 from "@/assets/hydro-diy/step5-nutrients.jpg";
+import step6 from "@/assets/hydro-diy/step6-planting.jpg";
+import step7 from "@/assets/hydro-diy/step7-complete.jpg";
 
 const Hydroponics = () => {
   const beginnerPlants = [
@@ -66,10 +73,11 @@ const Hydroponics = () => {
         </div>
 
         <Tabs defaultValue="basics" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="basics">Podstawy</TabsTrigger>
             <TabsTrigger value="systems">Systemy</TabsTrigger>
             <TabsTrigger value="diy">Roztwory DIY</TabsTrigger>
+            <TabsTrigger value="gallery">Budowa DIY</TabsTrigger>
             <TabsTrigger value="plants">Rośliny</TabsTrigger>
           </TabsList>
 
@@ -245,6 +253,62 @@ const Hydroponics = () => {
                     </p>
                     <p className="text-sm text-muted-foreground">
                       <strong>Idealne dla:</strong> zioła, rośliny doniczkowe o małych wymaganiach wodnych
+                    </p>
+                  </div>
+
+                  <div className="bg-muted p-4 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">6. Aeroponika</h3>
+                    <p className="text-sm mb-2">
+                      <strong>Poziom:</strong> Zaawansowany
+                    </p>
+                    <p className="text-sm mb-2">
+                      Korzenie wiszą w powietrzu i są regularnie spryskiwane mgłą z roztworu odżywczego. 
+                      Najszybszy wzrost, ale wymaga więcej doświadczenia i sprzętu.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Idealne dla:</strong> pomidory, papryka, truskawki, rośliny o wysokich wymaganiach
+                    </p>
+                  </div>
+
+                  <div className="bg-muted p-4 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">7. Drip System (system kroplowy)</h3>
+                    <p className="text-sm mb-2">
+                      <strong>Poziom:</strong> Średnio zaawansowany
+                    </p>
+                    <p className="text-sm mb-2">
+                      Roztwór odżywczy jest podawany bezpośrednio do każdej rośliny przez system kroplowy. 
+                      Nadmiar spływa z powrotem do zbiornika lub jest odprowadzany.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Idealne dla:</strong> większe rośliny jak pomidory, ogórki, papryka
+                    </p>
+                  </div>
+
+                  <div className="bg-muted p-4 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">8. Dutch Bucket System</h3>
+                    <p className="text-sm mb-2">
+                      <strong>Poziom:</strong> Średnio zaawansowany
+                    </p>
+                    <p className="text-sm mb-2">
+                      Każda roślina rośnie w osobnym "wiadrze" wypełnionym medium uprawowym. 
+                      Roztwór odżywczy jest dostarczany na górę i spływa przez medium.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Idealne dla:</strong> duże rośliny jak pomidory, ogórki, cukinie
+                    </p>
+                  </div>
+
+                  <div className="bg-muted p-4 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-2">9. Vertical Tower Garden</h3>
+                    <p className="text-sm mb-2">
+                      <strong>Poziom:</strong> Dla początkujących do średnio zaawansowanych
+                    </p>
+                    <p className="text-sm mb-2">
+                      Wieża z otworami na rośliny, gdzie roztwór odżywczy spływa od góry lub jest 
+                      rozprowadzany systemem kroplowym. Oszczędza miejsce - idealne dla małych przestrzeni.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Idealne dla:</strong> sałata, zioła, truskawki, rośliny ozdobne
                     </p>
                   </div>
                 </div>
@@ -474,6 +538,168 @@ const Hydroponics = () => {
                       <li>• Waga elektroniczna (0.1g)</li>
                       <li>• Pojemniki na składniki</li>
                     </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="gallery" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5" />
+                  Budowa systemu hydroponicznego DWC krok po kroku
+                </CardTitle>
+                <CardDescription>
+                  Kompletny przewodnik wizualny budowy prostego systemu Deep Water Culture
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid gap-6">
+                  {/* Step 1 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">1</div>
+                      <h3 className="text-lg font-semibold">Przygotowanie materiałów</h3>
+                    </div>
+                    <img src={step1} alt="Krok 1 - Materiały" className="w-full rounded-lg border" />
+                    <div className="bg-muted p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2">Potrzebne materiały:</h4>
+                      <ul className="text-sm space-y-1">
+                        <li>• Pojemnik plastikowy z pokrywką (10-20L)</li>
+                        <li>• Doniczki sieciowe (net pots) 5-8cm średnicy</li>
+                        <li>• Pompa powietrza akwariowa</li>
+                        <li>• Przewód silikonowy</li>
+                        <li>• Dyfuzor powietrza (air stone)</li>
+                        <li>• Keramzyt lub hydroton</li>
+                        <li>• Roztwór odżywczy</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">2</div>
+                      <h3 className="text-lg font-semibold">Wiercenie otworów</h3>
+                    </div>
+                    <img src={step2} alt="Krok 2 - Wiercenie" className="w-full rounded-lg border" />
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-sm">
+                        Wywiercić otwory w pokrywce pojemnika, dostosowane do rozmiaru doniczek sieciowych. 
+                        Rozmieść je równomiernie, zachowując odstęp min. 15cm między roślinami. 
+                        Dodatkowo wywiercić małe otwory na przewód powietrzny.
+                      </p>
+                      <p className="text-sm mt-2 font-semibold">
+                        💡 Wskazówka: Użyj otwornic lub ostrych nożyczek do plastiku. Wygładź krawędzie papierem ściernym.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
+                      <h3 className="text-lg font-semibold">Instalacja pompy powietrza</h3>
+                    </div>
+                    <img src={step3} alt="Krok 3 - Pompa powietrza" className="w-full rounded-lg border" />
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-sm">
+                        Podłącz dyfuzor powietrza (air stone) do przewodu i umieść na dnie pojemnika. 
+                        Połącz przewód z pompą powietrza. Napełnij pojemnik czystą wodą do poziomu około 5-7cm 
+                        poniżej pokrywki. Włącz pompę - powinieneś zobaczyć bąbelki unoszące się w wodzie.
+                      </p>
+                      <p className="text-sm mt-2 font-semibold">
+                        ⚠️ Ważne: Pompa musi działać 24/7, aby dostarczać tlen do korzeni!
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">4</div>
+                      <h3 className="text-lg font-semibold">Przygotowanie doniczek sieciowych</h3>
+                    </div>
+                    <img src={step4} alt="Krok 4 - Doniczki" className="w-full rounded-lg border" />
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-sm">
+                        Wypełnij doniczki sieciowe keramzytem lub hydrotonem. Jeśli używasz sadzonek, 
+                        delikatnie oczyść korzenie z ziemi pod bieżącą wodą. Umieść sadzonkę w doniczce 
+                        i uzupełnij medium uprawowe wokół korzeni. Włóż doniczki w otwory w pokrywce.
+                      </p>
+                      <p className="text-sm mt-2 font-semibold">
+                        💡 Wskazówka: Korzenie powinny lekko dotykać wody na początku. Z czasem opadnie poziom.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 5 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">5</div>
+                      <h3 className="text-lg font-semibold">Dodanie roztworu odżywczego</h3>
+                    </div>
+                    <img src={step5} alt="Krok 5 - Roztwór" className="w-full rounded-lg border" />
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-sm">
+                        Przygotuj roztwór odżywczy według instrukcji na opakowaniu lub użyj przepisu DIY 
+                        z zakładki "Roztwory DIY". Dodaj roztwór do wody w pojemniku. Sprawdź pH (powinno 
+                        być między 5.5-6.5) i EC roztworu. Dostosuj jeśli potrzeba.
+                      </p>
+                      <p className="text-sm mt-2 font-semibold">
+                        📊 Dla sałaty i ziół: EC około 1.2-1.8 mS/cm, pH 5.5-6.0
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 6 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">6</div>
+                      <h3 className="text-lg font-semibold">Sadzenie roślin</h3>
+                    </div>
+                    <img src={step6} alt="Krok 6 - Sadzenie" className="w-full rounded-lg border" />
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-sm">
+                        Umieść młode sadzonki w przygotowanych doniczkach sieciowych. Upewnij się, 
+                        że korzenie mają kontakt z roztworem odżywczym. Zabezpiecz roślinę dodatkowym 
+                        keramzytem. Pierwszych kilka dni przyciemnij system, aby rośliny się zaaklimatyzowały.
+                      </p>
+                      <p className="text-sm mt-2 font-semibold">
+                        🌱 Najłatwiejsze na start: sałata, bazylia, mięta
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 7 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">7</div>
+                      <h3 className="text-lg font-semibold">System gotowy!</h3>
+                    </div>
+                    <img src={step7} alt="Krok 7 - Gotowy system" className="w-full rounded-lg border" />
+                    <div className="bg-muted p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2">Dalsze kroki i konserwacja:</h4>
+                      <ul className="text-sm space-y-2">
+                        <li>✅ Zapewnij 12-16 godzin światła dziennie (naturalne lub lampy LED)</li>
+                        <li>✅ Sprawdzaj poziom wody codziennie - uzupełniaj według potrzeb</li>
+                        <li>✅ Monitoruj pH i EC co 2-3 dni</li>
+                        <li>✅ Wymieniaj całkowicie roztwór co 2-3 tygodnie</li>
+                        <li>✅ Utrzymuj temperaturę 18-24°C</li>
+                        <li>✅ Pierwszy plon sałaty możesz zebrać już po 30-40 dniach!</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                    <h4 className="font-semibold mb-2 text-lg">🎉 Gratulacje!</h4>
+                    <p className="text-sm">
+                      Masz już działający system hydroponiczny! To dopiero początek Twojej przygody z uprawą bez gleby. 
+                      Możesz teraz eksperymentować z różnymi roślinami i optymalizować warunki wzrostu. 
+                      Pamiętaj, że praktyka czyni mistrza - każdy system może wymagać drobnych dostosowań.
+                    </p>
                   </div>
                 </div>
               </CardContent>
