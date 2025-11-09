@@ -418,6 +418,155 @@ const Hydroponics = () => {
                   </p>
                 </div>
 
+                <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-3 text-lg">Roztwór dla pomidorów i warzyw owocowych</h3>
+                  <p className="text-sm mb-4">Na 10 litrów wody (wyższe stężenie fosforu i potasu dla owocowania):</p>
+                  
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>30g Saletra wapniowa</strong> (Ca(NO₃)₂)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>25g Azotan potasowy</strong> (KNO₃)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>20g Fosforan monopotasowy</strong> (KH₂PO₄) - wyższe stężenie dla kwitnienia</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>12g Siarczan magnezu</strong> (MgSO₄)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>6ml chelat żelaza i 3ml mikroelementy</strong></span>
+                    </li>
+                  </ul>
+
+                  <p className="text-sm mt-4 italic text-muted-foreground">
+                    Zwiększone stężenie K i P pomaga w obfitym owocowaniu!
+                  </p>
+                </div>
+
+                <div className="bg-pink-500/10 border border-pink-500/20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-3 text-lg">Roztwór dla truskawek</h3>
+                  <p className="text-sm mb-4">Na 5 litrów wody (zoptymalizowany dla roślin owocowych jagodowych):</p>
+                  
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>12g Saletra wapniowa</strong> - dla mocnych owoców</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>10g Siarczan potasowy</strong> (K₂SO₄) - dla słodyczy owoców</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>8g Fosforan monopotasowy</strong> (KH₂PO₄)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>6g Siarczan magnezu</strong></span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>4ml chelat żelaza, 2ml mikroelementy</strong></span>
+                    </li>
+                  </ul>
+
+                  <div className="mt-3 p-2 bg-background/50 rounded text-xs">
+                    <strong>Wskazówka:</strong> Truskawki potrzebują EC 1.8-2.2 mS/cm i pH 5.8-6.2
+                  </div>
+                </div>
+
+                <div className="bg-teal-500/10 border border-teal-500/20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-3 text-lg">Roztwór Masterblend (profesjonalny przepis)</h3>
+                  <p className="text-sm mb-4">Popularny roztwór 3-częściowy na 3.8 litra (1 galon):</p>
+                  
+                  <div className="space-y-3">
+                    <div className="border-l-4 border-primary pl-4">
+                      <p className="font-semibold">Część A - Masterblend 4-18-38:</p>
+                      <p className="text-sm mt-1">• 12g nawóz Masterblend (lub podobny NPK 4-18-38)</p>
+                    </div>
+
+                    <div className="border-l-4 border-primary pl-4">
+                      <p className="font-semibold">Część B - Siarczan magnezu:</p>
+                      <p className="text-sm mt-1">• 12g sól Epsom (MgSO₄·7H₂O)</p>
+                    </div>
+
+                    <div className="border-l-4 border-primary pl-4">
+                      <p className="font-semibold">Część C - Saletra wapniowa:</p>
+                      <p className="text-sm mt-1">• 12g Ca(NO₃)₂·4H₂O</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
+                    <p className="text-sm">
+                      <strong>⚠️ Kolejność dodawania:</strong> Najpierw A+B razem, potem osobno C. 
+                      Nigdy nie mieszaj B i C razem przed dodaniem do wody!
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-3 text-lg">Prosty roztwór z kompostu (organiczny)</h3>
+                  <p className="text-sm mb-4">Naturalny roztwór dla miłośników ekologii:</p>
+                  
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>200g dobrego kompostu lub humusu</strong> w woreczku z gazy</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>10L wody odstanej</strong> - zamocz kompost na 24-48h</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>50ml płynnego nawozu rybnego</strong> lub z glonów</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>1 łyżka melasy</strong> - dla mikroorganizmów</span>
+                    </li>
+                  </ul>
+
+                  <p className="text-sm mt-4 italic text-muted-foreground">
+                    Ten roztwór jest mniej precyzyjny, ale całkowicie naturalny i bezpieczny dla ziół i warzyw liściastych.
+                  </p>
+                </div>
+
+                <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-4">
+                  <h3 className="font-semibold mb-3 text-lg">Roztwór dla roślin ozdobnych</h3>
+                  <p className="text-sm mb-4">Na 5 litrów wody (dla Pothos, Monstera, Philodendron):</p>
+                  
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>8g Nawóz NPK 20-20-20</strong> (zrównoważony)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>3g Siarczan magnezu</strong></span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>2ml Chelat żelaza</strong></span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary">•</span>
+                      <span><strong>5ml Ekstrakt z wodorostów</strong> (opcjonalnie - dla lepszego wzrostu)</span>
+                    </li>
+                  </ul>
+
+                  <div className="mt-3 p-2 bg-background/50 rounded text-xs">
+                    EC dla roślin ozdobnych: 1.0-1.5 mS/cm (niższe niż dla warzyw)
+                  </div>
+                </div>
+
                 <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
                   <h3 className="font-semibold mb-3 text-lg">Krok po kroku - przygotowanie</h3>
                   <ol className="space-y-3 text-sm">
