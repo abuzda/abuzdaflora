@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Droplets, Leaf, Beaker, BookOpen, CheckCircle2, AlertTriangle, Image as ImageIcon } from "lucide-react";
+import { NutrientCalculator } from "@/components/NutrientCalculator";
 import step1 from "@/assets/hydro-diy/step1-materials.jpg";
 import step2 from "@/assets/hydro-diy/step2-drilling.jpg";
 import step3 from "@/assets/hydro-diy/step3-airpump.jpg";
@@ -351,6 +352,8 @@ const Hydroponics = () => {
           </TabsContent>
 
           <TabsContent value="diy" className="space-y-4">
+            <NutrientCalculator />
+            
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
