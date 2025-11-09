@@ -25,6 +25,7 @@ import GrowthJournal from "./pages/GrowthJournal";
 import CareCalendar from "./pages/CareCalendar";
 import LightCalculator from "./pages/LightCalculator";
 import Hydroponics from "./pages/Hydroponics";
+import Pests from "./pages/Pests";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
               <Route path="/light-calculator" element={<AuthGuard><LightCalculator /></AuthGuard>} />
               <Route path="/hydroponics" element={<AuthGuard><Hydroponics /></AuthGuard>} />
+              <Route path="/pests" element={<AuthGuard><Pests /></AuthGuard>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

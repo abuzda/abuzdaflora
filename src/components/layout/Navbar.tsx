@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useAuth } from '@/contexts/AuthContext';
-import { LogOut, User, Book, Calendar, Sprout, ChevronDown, Sun, Droplets } from 'lucide-react';
+import { LogOut, User, Book, Calendar, Sprout, ChevronDown, Sun, Droplets, Bug } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -135,6 +135,12 @@ export function Navbar() {
                   <Link to="/hydroponics" className="cursor-pointer">
                     <Droplets className="mr-2 h-4 w-4" />
                     Hydroponika
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/pests" className="cursor-pointer">
+                    <Bug className="mr-2 h-4 w-4" />
+                    Szkodniki
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>

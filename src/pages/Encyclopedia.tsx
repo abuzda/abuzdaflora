@@ -19,6 +19,12 @@ import basilImg from '@/assets/plants/basil.jpg';
 import mintImg from '@/assets/plants/mint.jpg';
 import rosemaryImg from '@/assets/plants/rosemary.jpg';
 import lavenderImg from '@/assets/plants/lavender.jpg';
+import echeveriaImg from '@/assets/plants/echeveria.jpg';
+import philodendronImg from '@/assets/plants/philodendron.jpg';
+import dracaenaImg from '@/assets/plants/dracaena.jpg';
+import rubberPlantImg from '@/assets/plants/rubber-plant.jpg';
+import peaceLilyImg from '@/assets/plants/peace-lily.jpg';
+import pileaImg from '@/assets/plants/pilea.jpg';
 
 export default function Encyclopedia() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -233,6 +239,90 @@ export default function Encyclopedia() {
       description: 'Pachnąca roślina o fioletowych kwiatach. Uspokaja, poprawia sen i odpędza insekty. Kwiaty nadają się do suszenia.',
       care: 'Podlewaj oszczędnie - pochodzi z suchych regionów. Wymaga pełnego słońca i bardzo dobrego drenażu. Przycinaj po kwitnieniu.',
       tips: 'Potrzebuje dużo słońca i dobrze przepuszczalnej gleby. Suszone kwiaty zachowują aromat przez miesiące.'
+    },
+    {
+      name: 'Echeveria',
+      scientificName: 'Echeveria',
+      commonName: 'Echeweria',
+      difficulty: 'Łatwa',
+      light: 'Bardzo jasne, słoneczne',
+      water: 'Rzadkie (co 2-3 tygodnie)',
+      humidity: 'Niska (30-40%)',
+      temperature: '15-27°C',
+      image: echeveriaImg,
+      description: 'Piękny sukulent tworzący róże z mięsistych liści. Dostępny w wielu kolorach - od zieleni przez błękit po różowe odcienie.',
+      care: 'Podlewaj bardzo rzadko, tylko gdy gleba całkowicie wyschnie. Wymaga drenażu i pełnego słońca. Unikaj zalewania - może gniać.',
+      tips: 'Latem może stać na zewnątrz. Łatwo rozmnażać z liści - wystarczy położyć liść na ziemi i poczekać.'
+    },
+    {
+      name: 'Filodendron Pnący',
+      scientificName: 'Philodendron scandens',
+      commonName: 'Filodendron pnący',
+      difficulty: 'Bardzo łatwa',
+      light: 'Jasne do półcienia',
+      water: 'Umiarkowane (co 5-7 dni)',
+      humidity: 'Średnia (40-60%)',
+      temperature: '16-27°C',
+      image: philodendronImg,
+      description: 'Szybko rosnąca roślina pnąca o sercowatych liściach. Doskonała do wiszących doniczek lub jako pnącze przy podporze.',
+      care: 'Podlewaj, gdy górna warstwa gleby wyschnie. Może rosnąć zarówno w jasnym miejscu, jak i w półcieniu. Przycinaj dla krzewiastości.',
+      tips: 'Bardzo łatwy w rozmnażaniu - sadzonki szybko się ukorzeniają w wodzie. Rośnie szybko i jest niemal niezawodny.'
+    },
+    {
+      name: 'Dracena',
+      scientificName: 'Dracaena marginata',
+      commonName: 'Dracena obrzeżona',
+      difficulty: 'Łatwa',
+      light: 'Jasne do półcienia',
+      water: 'Umiarkowane (co 7-10 dni)',
+      humidity: 'Średnia (40-60%)',
+      temperature: '16-24°C',
+      image: dracaenaImg,
+      description: 'Elegancka roślina o długich, wąskich liściach z czerwonymi obrzeżami. Może osiągnąć znaczną wysokość w domu.',
+      care: 'Podlewaj regularnie, ale pozwól glebie lekko wyschnąć między podlewaniami. Toleruje półcień. Czyść liście regularnie.',
+      tips: 'Doskonale oczyszcza powietrze. Można formować przez przycinanie - nowe pędy wyrosną poniżej cięcia.'
+    },
+    {
+      name: 'Figowiec Elastyczny',
+      scientificName: 'Ficus elastica',
+      commonName: 'Drzewko gumowe',
+      difficulty: 'Średnia',
+      light: 'Jasne (bez bezpośredniego słońca)',
+      water: 'Umiarkowane (co 7 dni)',
+      humidity: 'Średnia (40-60%)',
+      temperature: '16-24°C',
+      image: rubberPlantImg,
+      description: 'Okazała roślina o wielkich, lśniących liściach. Może rosnąć jako duże drzewo domowe osiągając nawet 3 metry wysokości.',
+      care: 'Regularnie podlewaj, utrzymując ziemię lekko wilgotną. Regularnie czyść liście wilgotną ściereczką. Nie przesadzaj zbyt często.',
+      tips: 'Nie lubi zmian miejsca - wybierz raz na zawsze. Może zrzucać liście w reakcji na stres (przeprowadzka, przeciągi).'
+    },
+    {
+      name: 'Lilia Pokoju',
+      scientificName: 'Spathiphyllum wallisii',
+      commonName: 'Skrzydłokwiat',
+      difficulty: 'Łatwa',
+      light: 'Półcień do cienia',
+      water: 'Obfite (co 3-5 dni)',
+      humidity: 'Wysoka (50-70%)',
+      temperature: '18-27°C',
+      image: peaceLilyImg,
+      description: 'Piękna roślina z białymi kwiatami przypominającymi żagle. Jedna z najlepszych roślin do oczyszczania powietrza.',
+      care: 'Utrzymuj ziemię wilgotną (nie mokrą). Zraszaj liście. Doskonała do łazienki - kocha wilgoć i toleruje cień.',
+      tips: 'Liście opadają gdy potrzebuje wody - "mówi" kiedy jest spragniona. Po podlaniu szybko się podnosi.'
+    },
+    {
+      name: 'Pilea',
+      scientificName: 'Pilea peperomioides',
+      commonName: 'Chińskie drzewko pieniędzy',
+      difficulty: 'Łatwa',
+      light: 'Jasne, rozproszone',
+      water: 'Umiarkowane (co 7 dni)',
+      humidity: 'Średnia (40-60%)',
+      temperature: '15-24°C',
+      image: pileaImg,
+      description: 'Modna roślina o okrągłych, monetowatych liściach. Symbol dobrobytu i szczęścia. Bardzo dekoracyjna i łatwa w uprawie.',
+      care: 'Podlewaj gdy górna warstwa gleby wyschnie. Obracaj doniczkę co tydzień dla równomiernego wzrostu. Lubi jasne, rozproszone światło.',
+      tips: 'Tworzy młode sadzonki wokół podstawy - łatwo się nią dzielić z przyjaciółmi. Nie lubi bezpośredniego słońca.'
     }
   ];
 
