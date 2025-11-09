@@ -199,8 +199,14 @@ export function Navbar() {
         </div>
 
         {/* Mobile Menu Dropdown */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-background border-t">
+        <div 
+          className={`md:hidden bg-background border-t overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className={`transform transition-transform duration-300 ${
+            mobileMenuOpen ? 'translate-y-0' : '-translate-y-4'
+          }`}>
             <div className="px-4 py-3 space-y-1">
               <Link
                 to="/"
@@ -379,7 +385,7 @@ export function Navbar() {
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );

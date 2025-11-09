@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGuard } from "@/components/auth/AuthGuard";
+import { UpdatePrompt } from "@/components/UpdatePrompt";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import History from "./pages/History";
@@ -35,6 +36,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <UpdatePrompt />
         <BrowserRouter>
           <AuthProvider>
             <Routes>

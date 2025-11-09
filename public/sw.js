@@ -1,19 +1,22 @@
-// Service Worker for push notifications
+// Service Worker for push notifications and updates
 self.addEventListener('install', (event) => {
   console.log('Service Worker installing.');
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  console.log('Service Worker activating.');
-  event.waitUntil(clients.claim());
-});
-
 self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
   if (event.data && event.data.type === 'SCHEDULE_NOTIFICATIONS') {
     console.log('Scheduling notifications...');
     scheduleNotifications();
   }
+});
+
+self.addEventListener('activate', (event) => {
+  console.log('Service Worker activating.');
+  event.waitUntil(clients.claim());
 });
 
 self.addEventListener('push', (event) => {
