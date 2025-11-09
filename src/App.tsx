@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGuard } from "@/components/auth/AuthGuard";
 import { UpdatePrompt } from "@/components/UpdatePrompt";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import History from "./pages/History";
@@ -37,6 +38,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <UpdatePrompt />
+        <OfflineIndicator />
         <BrowserRouter>
           <AuthProvider>
             <Routes>
