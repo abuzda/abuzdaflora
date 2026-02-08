@@ -3,14 +3,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { NotificationSettings } from '@/components/NotificationSettings';
+import { DataExport } from '@/components/DataExport';
 
 export default function Profile() {
   const { user, signOut } = useAuth();
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <h1 className="text-3xl font-bold mb-6">Profil</h1>
+      <div className="container mx-auto px-4 py-8 max-w-2xl space-y-6">
+        <h1 className="text-3xl font-bold">Profil</h1>
         
         <Card>
           <CardHeader>
@@ -30,7 +32,6 @@ export default function Profile() {
                 </p>
               </div>
             </div>
-
             <div className="pt-4 border-t">
               <Button variant="destructive" onClick={signOut}>
                 Wyloguj się
@@ -38,6 +39,9 @@ export default function Profile() {
             </div>
           </CardContent>
         </Card>
+
+        <NotificationSettings />
+        <DataExport />
       </div>
     </Layout>
   );
