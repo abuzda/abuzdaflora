@@ -29,6 +29,9 @@ import LightCalculator from "./pages/LightCalculator";
 import Hydroponics from "./pages/Hydroponics";
 import Pests from "./pages/Pests";
 import PlantGallery from "./pages/PlantGallery";
+import Achievements from "./pages/Achievements";
+import Stats from "./pages/Stats";
+import PublicProfile from "./pages/PublicProfile";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +66,9 @@ const App = () => (
               <Route path="/hydroponics" element={<AuthGuard><Hydroponics /></AuthGuard>} />
               <Route path="/pests" element={<AuthGuard><Pests /></AuthGuard>} />
               <Route path="/gallery" element={<AuthGuard><PlantGallery /></AuthGuard>} />
+              <Route path="/achievements" element={<AuthGuard><Achievements /></AuthGuard>} />
+              <Route path="/stats" element={<AuthGuard><Stats /></AuthGuard>} />
+              <Route path="/public/:token" element={<PublicProfile />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
