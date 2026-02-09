@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -5,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { NotificationSettings } from '@/components/NotificationSettings';
 import { DataExport } from '@/components/DataExport';
+import { ShareProfile } from '@/components/ShareProfile';
+import { Trophy, BarChart3 } from 'lucide-react';
 
 export default function Profile() {
   const { user, signOut } = useAuth();
@@ -32,6 +35,14 @@ export default function Profile() {
                 </p>
               </div>
             </div>
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" asChild>
+                <Link to="/achievements"><Trophy className="h-4 w-4 mr-2" />Osiągnięcia</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link to="/stats"><BarChart3 className="h-4 w-4 mr-2" />Statystyki</Link>
+              </Button>
+            </div>
             <div className="pt-4 border-t">
               <Button variant="destructive" onClick={signOut}>
                 Wyloguj się
@@ -40,6 +51,7 @@ export default function Profile() {
           </CardContent>
         </Card>
 
+        <ShareProfile />
         <NotificationSettings />
         <DataExport />
       </div>
