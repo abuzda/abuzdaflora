@@ -32,6 +32,7 @@ import PlantGallery from "./pages/PlantGallery";
 import Achievements from "./pages/Achievements";
 import Stats from "./pages/Stats";
 import PublicProfile from "./pages/PublicProfile";
+import IoTDashboard from "./pages/IoTDashboard";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const App = () => (
               <Route path="/gallery" element={<AuthGuard><PlantGallery /></AuthGuard>} />
               <Route path="/achievements" element={<AuthGuard><Achievements /></AuthGuard>} />
               <Route path="/stats" element={<AuthGuard><Stats /></AuthGuard>} />
+              <Route path="/iot" element={<AuthGuard><IoTDashboard /></AuthGuard>} />
               <Route path="/public/:token" element={<PublicProfile />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
