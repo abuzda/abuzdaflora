@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { NotificationSettings } from '@/components/NotificationSettings';
 import { DataExport } from '@/components/DataExport';
 import { ShareProfile } from '@/components/ShareProfile';
-import { Trophy, BarChart3 } from 'lucide-react';
+import { Trophy, BarChart3, Wifi } from 'lucide-react';
 
 export default function Profile() {
   const { user, signOut } = useAuth();
@@ -41,6 +41,9 @@ export default function Profile() {
               </Button>
               <Button variant="outline" asChild>
                 <Link to="/stats"><BarChart3 className="h-4 w-4 mr-2" />Statystyki</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link to="/iot"><Wifi className="h-4 w-4 mr-2" />Czujniki IoT</Link>
               </Button>
             </div>
             <div className="pt-4 border-t">

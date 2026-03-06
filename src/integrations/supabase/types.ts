@@ -154,6 +154,53 @@ export type Database = {
           },
         ]
       }
+      iot_devices: {
+        Row: {
+          created_at: string
+          device_name: string
+          device_type: string | null
+          id: string
+          is_active: boolean | null
+          last_seen_at: string | null
+          plant_id: string | null
+          tuya_device_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_name: string
+          device_type?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_seen_at?: string | null
+          plant_id?: string | null
+          tuya_device_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_name?: string
+          device_type?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_seen_at?: string | null
+          plant_id?: string | null
+          tuya_device_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "iot_devices_plant_id_fkey"
+            columns: ["plant_id"]
+            isOneToOne: false
+            referencedRelation: "plant_collection"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       plant_collection: {
         Row: {
           created_at: string
@@ -295,6 +342,45 @@ export type Database = {
           id?: string
           share_token?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      sensor_readings: {
+        Row: {
+          battery_level: number | null
+          created_at: string
+          device_id: string
+          device_name: string | null
+          humidity: number | null
+          id: string
+          reading_at: string
+          soil_moisture: number | null
+          temperature: number | null
+          user_id: string
+        }
+        Insert: {
+          battery_level?: number | null
+          created_at?: string
+          device_id: string
+          device_name?: string | null
+          humidity?: number | null
+          id?: string
+          reading_at?: string
+          soil_moisture?: number | null
+          temperature?: number | null
+          user_id: string
+        }
+        Update: {
+          battery_level?: number | null
+          created_at?: string
+          device_id?: string
+          device_name?: string | null
+          humidity?: number | null
+          id?: string
+          reading_at?: string
+          soil_moisture?: number | null
+          temperature?: number | null
+          user_id?: string
         }
         Relationships: []
       }
