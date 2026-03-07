@@ -2,3 +2,9 @@ project_id = "xlfiqvxkgubbwtjhrroq"
 
 [functions.identify-plant]
 verify_jwt = false
+
+[functions.sensor-advisor]
+verify_jwt = false
+
+[functions.tuya-sync]
+verify_jwt = false
