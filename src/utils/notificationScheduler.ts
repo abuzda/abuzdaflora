@@ -108,6 +108,17 @@ export class NotificationScheduler {
     }
   }
 
+  static async sendSensorAlert(plantName: string, soilMoisture: number) {
+    if (soilMoisture < 25) {
+      await this.sendNotification({
+        title: '⚠️ Niska wilgotność gleby!',
+        body: `${plantName || 'Roślina'}: wilgotność gleby wynosi ${soilMoisture}%. Czas podlać!`,
+        tag: `sensor-alert-${Date.now()}`,
+        data: { type: 'sensor_alert' },
+      });
+    }
+  }
+
   static initialize() {
     if (typeof window === 'undefined') return;
 
