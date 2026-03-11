@@ -107,6 +107,7 @@ const IoTDashboard = () => {
 
         <SensorCards data={liveData} />
         <SensorCharts data={historicalData} />
+        <SensorAlerts sensorData={liveData} />
         <SensorAdvisor sensorData={liveData} />
         <DeviceManager devices={devices} plants={plants} onDeviceAdded={fetchDevices} />
         <TuyaSetup />
