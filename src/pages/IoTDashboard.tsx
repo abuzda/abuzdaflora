@@ -7,6 +7,7 @@ import { Wifi, WifiOff } from "lucide-react";
 import { SensorCards } from "@/components/iot/SensorCards";
 import { SensorCharts } from "@/components/iot/SensorCharts";
 import { SensorAdvisor } from "@/components/iot/SensorAdvisor";
+import { SensorAlerts } from "@/components/iot/SensorAlerts";
 import { DeviceManager } from "@/components/iot/DeviceManager";
 import { TuyaSetup } from "@/components/iot/TuyaSetup";
 
