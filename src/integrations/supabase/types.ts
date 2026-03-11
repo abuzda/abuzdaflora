@@ -384,6 +384,36 @@ export type Database = {
         }
         Relationships: []
       }
+      tuya_credentials: {
+        Row: {
+          created_at: string
+          id: string
+          tuya_access_id: string
+          tuya_access_secret: string
+          tuya_region: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          tuya_access_id: string
+          tuya_access_secret: string
+          tuya_region?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          tuya_access_id?: string
+          tuya_access_secret?: string
+          tuya_region?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_weather_preferences: {
         Row: {
           city_name: string
