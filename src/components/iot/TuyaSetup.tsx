@@ -257,13 +257,25 @@ export function TuyaSetup() {
           </div>
         )}
 
+        {hasCredentials && (
+          <div className="p-3 rounded-lg bg-primary/5 border border-primary/20 text-sm flex items-start gap-2">
+            <Clock className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
+            <div className="flex-1">
+              <div className="font-medium text-foreground">Auto-sync aktywny — co 15 minut</div>
+              <div className="text-xs text-muted-foreground mt-0.5">
+                Ostatnia synchronizacja: {formatLastSync(lastSyncAt)}
+              </div>
+            </div>
+          </div>
+        )}
+
         <Button variant="outline" onClick={syncDevices} disabled={isSyncing || !hasCredentials}>
           {isSyncing ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
           ) : (
             <RefreshCw className="h-4 w-4 mr-2" />
           )}
-          {isSyncing ? "Synchronizuję..." : "Synchronizuj z Tuya"}
+          {isSyncing ? "Synchronizuję..." : "Synchronizuj teraz"}
         </Button>
       </CardContent>
     </Card>
