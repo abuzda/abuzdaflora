@@ -38,6 +38,24 @@ export type Database = {
         }
         Relationships: []
       }
+      cron_secrets: {
+        Row: {
+          created_at: string
+          id: string
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          token: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          token?: string
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string

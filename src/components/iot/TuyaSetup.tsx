@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Wifi, RefreshCw, CheckCircle, Loader2, Key, Eye, EyeOff, Save, Trash2 } from "lucide-react";
+import { Wifi, RefreshCw, CheckCircle, Loader2, Key, Eye, EyeOff, Save, Trash2, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
@@ -27,10 +27,25 @@ export function TuyaSetup() {
   const [isSaving, setIsSaving] = useState(false);
   const [hasCredentials, setHasCredentials] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
 
   useEffect(() => {
-    if (user) loadCredentials();
+    if (user) {
+      loadCredentials();
+      loadLastSync();
+    }
   }, [user]);
+
+  const loadLastSync = async () => {
+    const { data } = await supabase
+      .from("sensor_readings")
+      .select("reading_at")
+      .eq("user_id", user!.id)
+      .order("reading_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (data?.reading_at) setLastSyncAt(new Date(data.reading_at));
+  };
 
   const loadCredentials = async () => {
     setIsLoading(true);
@@ -117,6 +132,7 @@ export function TuyaSetup() {
         const synced = data.results.filter((r: any) => r.status === "synced").length;
         setSyncResult(`Zsynchronizowano ${synced} z ${data.results.length} urządzeń.`);
         toast.success(`Zsynchronizowano ${synced} urządzeń!`);
+        await loadLastSync();
       } else {
         setSyncResult(data?.message || "Brak urządzeń do synchronizacji.");
       }
@@ -126,6 +142,16 @@ export function TuyaSetup() {
     } finally {
       setIsSyncing(false);
     }
+  };
+
+  const formatLastSync = (date: Date | null) => {
+    if (!date) return "brak danych";
+    const diffMin = Math.floor((Date.now() - date.getTime()) / 60000);
+    if (diffMin < 1) return "przed chwilą";
+    if (diffMin < 60) return `${diffMin} min temu`;
+    const diffH = Math.floor(diffMin / 60);
+    if (diffH < 24) return `${diffH} godz. temu`;
+    return date.toLocaleString("pl-PL");
   };
 
   if (isLoading) {
@@ -231,13 +257,25 @@ export function TuyaSetup() {
           </div>
         )}
 
+        {hasCredentials && (
+          <div className="p-3 rounded-lg bg-primary/5 border border-primary/20 text-sm flex items-start gap-2">
+            <Clock className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
+            <div className="flex-1">
+              <div className="font-medium text-foreground">Auto-sync aktywny — co 15 minut</div>
+              <div className="text-xs text-muted-foreground mt-0.5">
+                Ostatnia synchronizacja: {formatLastSync(lastSyncAt)}
+              </div>
+            </div>
+          </div>
+        )}
+
         <Button variant="outline" onClick={syncDevices} disabled={isSyncing || !hasCredentials}>
           {isSyncing ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
           ) : (
             <RefreshCw className="h-4 w-4 mr-2" />
           )}
-          {isSyncing ? "Synchronizuję..." : "Synchronizuj z Tuya"}
+          {isSyncing ? "Synchronizuję..." : "Synchronizuj teraz"}
         </Button>
       </CardContent>
     </Card>
