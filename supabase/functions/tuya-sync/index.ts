@@ -142,7 +142,17 @@ Deno.serve(async (req) => {
 
     const authHeader = req.headers.get("Authorization") || "";
     const bearer = authHeader.replace("Bearer ", "");
-    const isCron = req.headers.get("x-cron-trigger") === "true" && bearer === serviceKey;
+    const cronToken = req.headers.get("x-cron-token");
+
+    let isCron = false;
+    if (cronToken) {
+      const { data: secret } = await supabase
+        .from("cron_secrets")
+        .select("token")
+        .eq("id", "tuya_sync")
+        .maybeSingle();
+      isCron = !!secret && secret.token === cronToken;
+    }
 
     // ===== CRON BATCH MODE =====
     if (isCron) {
