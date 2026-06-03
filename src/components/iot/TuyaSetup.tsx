@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Wifi, RefreshCw, CheckCircle, Loader2, Key, Eye, EyeOff, Save, Trash2 } from "lucide-react";
+import { Wifi, RefreshCw, CheckCircle, Loader2, Key, Eye, EyeOff, Save, Trash2, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
