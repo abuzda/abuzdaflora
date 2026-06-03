@@ -132,6 +132,7 @@ export function TuyaSetup() {
         const synced = data.results.filter((r: any) => r.status === "synced").length;
         setSyncResult(`Zsynchronizowano ${synced} z ${data.results.length} urządzeń.`);
         toast.success(`Zsynchronizowano ${synced} urządzeń!`);
+        await loadLastSync();
       } else {
         setSyncResult(data?.message || "Brak urządzeń do synchronizacji.");
       }
@@ -141,6 +142,16 @@ export function TuyaSetup() {
     } finally {
       setIsSyncing(false);
     }
+  };
+
+  const formatLastSync = (date: Date | null) => {
+    if (!date) return "brak danych";
+    const diffMin = Math.floor((Date.now() - date.getTime()) / 60000);
+    if (diffMin < 1) return "przed chwilą";
+    if (diffMin < 60) return `${diffMin} min temu`;
+    const diffH = Math.floor(diffMin / 60);
+    if (diffH < 24) return `${diffH} godz. temu`;
+    return date.toLocaleString("pl-PL");
   };
 
   if (isLoading) {
