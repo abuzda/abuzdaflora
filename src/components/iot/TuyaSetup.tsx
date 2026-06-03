@@ -27,10 +27,25 @@ export function TuyaSetup() {
   const [isSaving, setIsSaving] = useState(false);
   const [hasCredentials, setHasCredentials] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
 
   useEffect(() => {
-    if (user) loadCredentials();
+    if (user) {
+      loadCredentials();
+      loadLastSync();
+    }
   }, [user]);
+
+  const loadLastSync = async () => {
+    const { data } = await supabase
+      .from("sensor_readings")
+      .select("reading_at")
+      .eq("user_id", user!.id)
+      .order("reading_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (data?.reading_at) setLastSyncAt(new Date(data.reading_at));
+  };
 
   const loadCredentials = async () => {
     setIsLoading(true);
