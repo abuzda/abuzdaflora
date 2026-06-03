@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+    "authorization, x-client-info, apikey, content-type, x-cron-trigger",
 };
 
 const TUYA_REGIONS: Record<string, string> = {
@@ -72,6 +72,64 @@ async function getDeviceStatus(
   return await response.json();
 }
 
+interface SyncContext {
+  supabase: ReturnType<typeof createClient>;
+  userId: string;
+  creds: { tuya_access_id: string; tuya_access_secret: string; tuya_region: string };
+}
+
+async function syncUserDevices({ supabase, userId, creds }: SyncContext) {
+  const baseUrl = TUYA_REGIONS[creds.tuya_region] || TUYA_REGIONS.eu;
+  const token = await getTuyaToken(baseUrl, creds.tuya_access_id, creds.tuya_access_secret);
+
+  const { data: devices } = await supabase
+    .from("iot_devices")
+    .select("*")
+    .eq("user_id", userId)
+    .not("tuya_device_id", "is", null);
+
+  if (!devices || devices.length === 0) {
+    return { user_id: userId, message: "Brak urządzeń Tuya", results: [] };
+  }
+
+  const results: Array<Record<string, unknown>> = [];
+  for (const device of devices) {
+    try {
+      const status = await getDeviceStatus(
+        baseUrl, creds.tuya_access_id, creds.tuya_access_secret, token, device.tuya_device_id!
+      );
+
+      if (status.success) {
+        const reading: Record<string, unknown> = {
+          user_id: userId,
+          device_id: device.id,
+          device_name: device.device_name,
+          reading_at: new Date().toISOString(),
+        };
+
+        for (const s of status.result) {
+          if (s.code === "va_humidity" || s.code === "humidity_value") reading.soil_moisture = s.value / 10;
+          if (s.code === "va_temperature" || s.code === "temp_current") reading.temperature = s.value / 10;
+          if (s.code === "humidity_indoor") reading.humidity = s.value;
+          if (s.code === "battery_percentage") reading.battery_level = s.value;
+        }
+
+        await supabase.from("sensor_readings").insert(reading);
+        results.push({ device: device.device_name, status: "synced" });
+      } else {
+        results.push({ device: device.device_name, status: "error", error: status.msg });
+      }
+    } catch (err) {
+      results.push({
+        device: device.device_name,
+        status: "error",
+        error: err instanceof Error ? err.message : "Unknown error",
+      });
+    }
+  }
+  return { user_id: userId, results };
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -79,10 +137,47 @@ Deno.serve(async (req) => {
 
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, serviceKey);
 
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = req.headers.get("Authorization") || "";
+    const bearer = authHeader.replace("Bearer ", "");
+    const isCron = req.headers.get("x-cron-trigger") === "true" && bearer === serviceKey;
+
+    // ===== CRON BATCH MODE =====
+    if (isCron) {
+      const { data: allCreds } = await supabase
+        .from("tuya_credentials")
+        .select("user_id, tuya_access_id, tuya_access_secret, tuya_region");
+
+      const batchResults: Array<Record<string, unknown>> = [];
+      for (const c of allCreds || []) {
+        try {
+          const r = await syncUserDevices({
+            supabase,
+            userId: c.user_id as string,
+            creds: {
+              tuya_access_id: c.tuya_access_id as string,
+              tuya_access_secret: c.tuya_access_secret as string,
+              tuya_region: (c.tuya_region as string) || "eu",
+            },
+          });
+          batchResults.push(r);
+        } catch (err) {
+          console.error("Batch sync error for user", c.user_id, err);
+          batchResults.push({
+            user_id: c.user_id,
+            error: err instanceof Error ? err.message : "Unknown error",
+          });
+        }
+      }
+      return new Response(
+        JSON.stringify({ mode: "cron", users: batchResults.length, results: batchResults }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // ===== INTERACTIVE USER MODE =====
     if (!authHeader) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -90,7 +185,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { data: { user } } = await supabase.auth.getUser(authHeader.replace("Bearer ", ""));
+    const { data: { user } } = await supabase.auth.getUser(bearer);
     if (!user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -100,7 +195,6 @@ Deno.serve(async (req) => {
 
     const { action } = await req.json();
 
-    // Load user's Tuya credentials from DB
     const { data: creds } = await supabase
       .from("tuya_credentials")
       .select("tuya_access_id, tuya_access_secret, tuya_region")
@@ -118,53 +212,17 @@ Deno.serve(async (req) => {
       );
     }
 
-    const baseUrl = TUYA_REGIONS[creds.tuya_region] || TUYA_REGIONS.eu;
-
     if (action === "sync") {
-      const token = await getTuyaToken(baseUrl, creds.tuya_access_id, creds.tuya_access_secret);
-
-      const { data: devices } = await supabase
-        .from("iot_devices")
-        .select("*")
-        .eq("user_id", user.id)
-        .not("tuya_device_id", "is", null);
-
-      if (!devices || devices.length === 0) {
-        return new Response(
-          JSON.stringify({ message: "Brak urządzeń Tuya do synchronizacji" }),
-          { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
-      }
-
-      const results = [];
-      for (const device of devices) {
-        const status = await getDeviceStatus(
-          baseUrl, creds.tuya_access_id, creds.tuya_access_secret, token, device.tuya_device_id!
-        );
-
-        if (status.success) {
-          const reading: Record<string, unknown> = {
-            user_id: user.id,
-            device_id: device.id,
-            device_name: device.device_name,
-            reading_at: new Date().toISOString(),
-          };
-
-          for (const s of status.result) {
-            if (s.code === "va_humidity" || s.code === "humidity_value") reading.soil_moisture = s.value / 10;
-            if (s.code === "va_temperature" || s.code === "temp_current") reading.temperature = s.value / 10;
-            if (s.code === "humidity_indoor") reading.humidity = s.value;
-            if (s.code === "battery_percentage") reading.battery_level = s.value;
-          }
-
-          await supabase.from("sensor_readings").insert(reading);
-          results.push({ device: device.device_name, status: "synced" });
-        } else {
-          results.push({ device: device.device_name, status: "error", error: status.msg });
-        }
-      }
-
-      return new Response(JSON.stringify({ results }), {
+      const result = await syncUserDevices({
+        supabase,
+        userId: user.id,
+        creds: {
+          tuya_access_id: creds.tuya_access_id as string,
+          tuya_access_secret: creds.tuya_access_secret as string,
+          tuya_region: (creds.tuya_region as string) || "eu",
+        },
+      });
+      return new Response(JSON.stringify(result), {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
